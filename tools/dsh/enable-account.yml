@@ -1,0 +1,30 @@
+# 备份：让 dsh headless 复用桌面端已登录账号的 patch 内容
+#
+# 正常情况用不到这个文件——同样的内容已经固化在
+#   C:\Users\Zhong yuan\.dsh\profiles\headless\cordis.patch.yml
+# 所以直接跑 `dsh --profile headless "<任务>"` 就能工作。
+#
+# 什么时候用它：该 profile 被重置（重装 DSH、或误删 ~/.dsh/profiles/headless）。
+# 恢复办法二选一：
+#   1) 把下面 4 个 patch 条目抄回上面那个 cordis.patch.yml
+#   2) 或临时按显式 overlay 调用：
+#      dsh --profile headless --patch D:\Project\HTML\tools\dsh\enable-account.yml "<任务>"
+#
+# 背景：@deepseek-ai/dsh-headless 的 bundle 层默认禁用 credentials /
+# authorization / deepseek-account（官方设计是"一次性任务只认启动时的
+# DEEPSEEK_API_KEY"）。profile 层在 bundle 层之后应用，所以能覆盖回来。
+#
+# 风险：headless 与桌面端共用同一份账号凭据，可能互相踢登录。
+
+- id: credentials
+  disabled: false
+- id: authorization
+  disabled: false
+- id: deepseek-account
+  disabled: false
+- id: agent-default-model
+  name: "@deepseek-ai/dsh-agent-default-model"
+  config:
+    provider: deepseek-account
+    model: deepseek-flash
+    reasoningEffort: high
