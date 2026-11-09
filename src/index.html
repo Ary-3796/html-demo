@@ -481,18 +481,6 @@
     /* ===== 单词复习内容 ===== */
     .word-list-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
     .field-label { color: var(--muted); font-size: 13px; font-weight: 600; white-space: nowrap; }
-    .word-pills { display: flex; flex-wrap: wrap; gap: 6px; }
-    .word-pill {
-      padding: 7px 13px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: #fff;
-      color: #5f6a60;
-      font-size: 14px;
-      transition: border-color .18s, background .18s, color .18s;
-    }
-    .word-pill:hover { border-color: #b7c8b7; color: var(--green); }
-    .word-pill.active { border-color: var(--green); background: var(--green); color: #fff; }
 
     .review-tabs,
     .grade-kinds {
@@ -524,6 +512,7 @@
       font-weight: 700;
       box-shadow: 0 3px 10px rgba(35, 52, 37, .08);
     }
+    .review-tab.disabled { opacity: .45; cursor: not-allowed; }
 
     .word-card {
       padding: 22px;
@@ -623,6 +612,82 @@
     .feedback strong { display: block; font-size: 13.5px; }
     .feedback p { margin: 6px 0 0; line-height: 1.65; }
     .practice-note { margin-top: 3px; color: #9aa49b; font-size: 12px; }
+
+    /* ===== 分批提交：进度、结果与答案页 ===== */
+    .progress-text { color: var(--green-deep); font-size: 14px; font-weight: 700; }
+    .round-results {
+      margin-top: 18px;
+      padding: 18px;
+      border: 1px solid #dce9d8;
+      border-radius: 18px;
+      background: #f7fbf5;
+    }
+    .round-results h4 { margin: 0 0 4px; font-size: 18px; }
+    .round-results .result-note { margin: 0 0 12px; color: var(--muted); font-size: 12.5px; }
+    .round-result-list { display: grid; gap: 9px; }
+    .round-result-item {
+      padding: 12px 14px;
+      border: 1px solid #e7eee1;
+      border-radius: 12px;
+      background: #fff;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .round-result-item.wrong { border-color: #f0d9c9; background: #fdf8f4; }
+    .round-result-item.ok { border-color: #dce9d8; }
+    .round-result-title { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-weight: 700; }
+    .round-result-tag {
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #edf5ec;
+      color: var(--green-deep);
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .round-result-tag.warn { background: var(--orange-soft); color: #8b5c3d; }
+    .round-result-line { margin-top: 4px; color: #59655b; }
+    .round-result-line b { color: var(--ink); }
+    .round-result-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .ocr-details {
+      margin-bottom: 16px;
+      padding: 10px 12px;
+      border: 1px solid #e6ece2;
+      border-radius: 11px;
+      background: #fafcf8;
+      font-size: 13px;
+    }
+    .ocr-details summary { color: var(--green-deep); font-weight: 600; cursor: pointer; }
+    .ocr-details[open] summary { margin-bottom: 8px; }
+    .ocr-details .api-status { margin: 0; }
+    .settings-form { display: grid; gap: 8px; margin-bottom: 14px; }
+    .settings-form .field-label { margin-top: 4px; }
+    .settings-form .answer-input { font-size: 14px; }
+    .provider-switch {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .provider-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .provider-option small { display: block; color: var(--muted); font-size: 12px; font-weight: 400; }
+    .provider-option:has(input:checked) { border-color: #bfd5be; background: var(--green-soft); color: var(--green-deep); }
+    .provider-panel { display: grid; gap: 8px; padding-top: 4px; }
+    .settings-hint { margin: 2px 0 0; color: #8b948c; font-size: 12px; line-height: 1.5; }
+    .small-button { padding: 7px 12px; border-radius: 999px; font-size: 12px; }
+    .demo-status.warn { border-color: #f0d9c9; background: var(--orange-soft); color: #8b5c3d; }
+    .demo-status.off { border-color: #e6e9e2; background: #f4f5f2; color: #778178; }
+    .demo-status.off .dot { background: #9aa49b; box-shadow: none; }
 
     .error-list { margin-bottom: 18px; }
     .error-head {
@@ -1024,6 +1089,21 @@
     }
     .print-practice strong { font-size: 11px; letter-spacing: .5px; }
     .print-practice p { margin: 8px 0 0; }
+    .print-section {
+      margin-top: 15px;
+      padding-top: 11px;
+      border-top: 1px dashed #dfe3db;
+      color: #566056;
+      font-size: 12px;
+    }
+    .print-section-title {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 11px;
+      letter-spacing: .5px;
+    }
+    .print-section .print-line { padding: 7px 0; border-top: 0; }
+    .print-answer-page { margin-top: 18px; }
     .print-foot {
       margin: 15px 0 0;
       color: #9aa198;
@@ -1149,6 +1229,7 @@
       #print-modal .modal-actions { display: none !important; }
       #print-modal .print-sheet { padding: 0; border: 0; }
       #print-modal .print-line { break-inside: avoid; }
+      #print-modal .print-answer-page { break-before: page; page-break-before: always; }
     }
   </style>
 </head>
@@ -1181,6 +1262,7 @@
           <h1>英语学习</h1>
         </div>
         <div class="profile">
+          <button class="outline-button small-button" id="open-settings" type="button">API 设置</button>
           <span class="demo-status" id="api-badge"><span class="dot" aria-hidden="true"></span>检查中…</span>
           <span class="today" id="today-label">今天</span>
           <span class="avatar" aria-hidden="true">E</span>
@@ -1195,7 +1277,7 @@
             <h2 id="home-title">今天练哪一项？</h2>
             <p>选一个入口，开始今天的英语练习。</p>
           </div>
-          <span class="hero-badge">本地服务代理 AI · Key 只在服务端</span>
+          <span class="hero-badge" id="hero-badge">本地服务代理 AI · Key 只在服务端</span>
         </div>
 
         <div class="entry-grid">
@@ -1205,7 +1287,7 @@
               <span class="entry-index">01</span>
             </span>
             <span class="entry-title">单词复习</span>
-            <span class="entry-sub">默写 · 造句 · 翻译</span>
+            <span class="entry-sub">默写 · 翻译练习</span>
             <span class="entry-action">开始复习 <span class="entry-arrow" aria-hidden="true">→</span></span>
           </button>
 
@@ -1229,11 +1311,11 @@
             <span class="demo-badge">本次会话</span>
           </div>
           <div class="history-list" id="history-list"></div>
-          <p class="history-note">记录仅保存在当前页面内存中，关闭页面即清空；图片只发送到你本机运行的代理服务。</p>
+          <p class="history-note" id="history-note">记录仅保存在当前页面内存中，关闭页面即清空；图片只发送到你配置的 AI 接口。</p>
         </section>
       </section>
 
-      <!-- ===== 单词复习功能页：默写、造句、翻译、错词与明日重点。 ===== -->
+      <!-- ===== 单词复习功能页：默写、翻译练习、错词与明日重点。 ===== -->
       <section class="view feature-view" id="review-view" aria-labelledby="review-title" hidden>
         <div class="feature-head">
           <button class="back-button" type="button" data-back>← 返回首页</button>
@@ -1241,7 +1323,7 @@
             <span class="feature-index">01</span>
             <div>
               <h2 id="review-title">单词复习</h2>
-              <p>默写 · 造句 · 翻译</p>
+              <p>默写 · 翻译练习</p>
             </div>
           </div>
           <button class="outline-button" type="button" data-reopen="review">更换图片</button>
@@ -1259,19 +1341,20 @@
             <div class="panel-body">
               <div class="file-summary" id="review-file-summary">未选择图片 · 当前使用预置演示词表</div>
               <div class="api-status" id="review-status" role="status" aria-live="polite" hidden></div>
-              <div id="ocr-preview-wrap" hidden>
+              <details class="ocr-details" id="ocr-preview-wrap" hidden>
+                <summary>查看 OCR 识别内容（默认折叠）</summary>
                 <div class="api-status info" id="ocr-preview"></div>
-              </div>
+              </details>
 
               <div class="word-list-bar">
-                <span class="field-label">选择单词</span>
-                <div class="word-pills" id="word-pills"></div>
+                <span class="field-label">复习进度</span>
+                <span class="progress-text" id="review-progress">第 1 / 6 题</span>
+                <span class="muted-note" id="round-state">尚未开始</span>
               </div>
 
               <div class="review-tabs" role="tablist" aria-label="复习方式">
                 <button class="review-tab active" type="button" data-mode="dictation" role="tab" aria-selected="true">默写单词</button>
-                <button class="review-tab" type="button" data-mode="sentence" role="tab" aria-selected="false">造句</button>
-                <button class="review-tab" type="button" data-mode="translation" role="tab" aria-selected="false">翻译</button>
+                <button class="review-tab" type="button" data-mode="translation" role="tab" aria-selected="false" aria-disabled="true" title="完成默写这一轮后进入翻译">翻译</button>
               </div>
 
               <div class="word-card">
@@ -1279,15 +1362,14 @@
                   <span class="word-index" id="word-index">01</span>
                   <div class="word-copy">
                     <div class="word-row">
-                      <div class="word masked" id="word-text">accurate</div>
-                      <button class="reveal-button" id="reveal-word" type="button">点击显示单词</button>
+                      <div class="word masked" id="word-text" aria-hidden="true">••••••</div>
                     </div>
                     <div class="phonetic-row">
-                      <span id="word-phonetic">/ˈækjərət/</span>
+                      <span id="word-phonetic">提交本轮后显示音标</span>
                       <span class="word-count" id="word-count">第 1 / 6 个</span>
                     </div>
                     <div class="meaning" id="word-meaning">准确的；精确的</div>
-                    <div class="hint" id="word-hint">提示：形容信息或测量没有错误</div>
+                    <div class="hint" id="word-hint">提交本轮后显示提示</div>
                   </div>
                   <div class="word-actions">
                     <button class="icon-button" id="prev-word" type="button" title="上一个词" aria-label="上一个词">‹</button>
@@ -1298,14 +1380,16 @@
               </div>
 
               <div class="practice-box">
-                <div class="practice-prompt" id="practice-prompt">根据中文释义和提示，写出英文单词：</div>
+                <div class="practice-prompt" id="practice-prompt">根据中文释义，写出英文单词：</div>
                 <div class="answer-row">
                   <input class="answer-input" id="practice-answer" type="text" autocomplete="off" placeholder="输入英文单词" aria-label="复习答案">
-                  <button class="primary-button" id="check-answer" type="button">检查</button>
+                  <button class="primary-button" id="check-answer" type="button">提交本题</button>
                 </div>
                 <div class="feedback" id="practice-feedback" aria-live="polite"></div>
-                <div class="practice-note" id="practice-note">提交后由服务端调用 DeepSeek 批改</div>
+                <div class="practice-note" id="practice-note">默写由浏览器本地判断，不调用 AI</div>
               </div>
+
+              <div class="round-results" id="round-results" hidden></div>
             </div>
           </section>
 
@@ -1344,7 +1428,7 @@
                 </div>
               </div>
               <div class="panel-body">
-                <p class="side-note">预览并打印本地复习单；「生成 Word 复习单」会调用本机后端实时生成 .docx 文件。</p>
+                <p class="side-note" id="export-note">预览并打印复习单；「生成 Word 复习单」会生成包含练习与答案页的 .docx 文件。</p>
                 <div class="stack-actions">
                   <button class="primary-button" id="open-print" type="button">预览复习单</button>
                   <button class="outline-button" id="export-word" type="button">生成 Word 复习单</button>
@@ -1382,9 +1466,10 @@
             <div class="panel-body">
               <div class="file-summary" id="grade-file-summary">未选择图片 · 当前使用预置批改示例</div>
               <div class="api-status" id="grade-status" role="status" aria-live="polite" hidden></div>
-              <div id="grade-ocr-wrap" hidden>
+              <details class="ocr-details" id="grade-ocr-wrap" hidden>
+                <summary>查看 OCR 识别内容（默认折叠）</summary>
                 <div class="api-status info" id="grade-ocr"></div>
-              </div>
+              </details>
 
               <div class="grade-kinds" role="tablist" aria-label="作业类型">
                 <button class="kind active" type="button" data-kind="words" role="tab" aria-selected="true">单词</button>
@@ -1414,7 +1499,7 @@
                   <button class="primary-button full" type="submit" id="grade-submit">提交批改</button>
                   <div class="grade-feedback" id="grade-feedback" aria-live="polite"></div>
                 </form>
-                <p class="side-note" id="grade-side-note">提交后由服务端调用 DeepSeek 批改；未配置 Key 时会提示并给出本地演示结果。</p>
+                <p class="side-note" id="grade-side-note">提交后由配置的 AI 接口批改；未配置 Key 时会提示并给出明确标注的演示结果。</p>
               </div>
             </section>
           </aside>
@@ -1433,7 +1518,7 @@
         </div>
         <button class="modal-close" id="close-upload" type="button" aria-label="关闭上传弹窗">×</button>
       </div>
-      <p class="modal-lead" id="upload-lead">选择一张包含英语内容的图片。图片仅发送到你本机的代理服务做识别，不会保存到服务器磁盘。</p>
+      <p class="modal-lead" id="upload-lead">选择一张包含英语内容的图片。图片仅发送到你配置的 AI 接口做识别，不会保存到服务器磁盘。</p>
 
       <div class="upload-preview" id="upload-preview" hidden>
         <img id="upload-preview-image" alt="已选图片预览" src="">
@@ -1459,7 +1544,7 @@
         <button class="outline-button" id="cancel-upload" type="button">取消</button>
         <button class="primary-button" id="continue-upload" type="button">直接进入单词复习</button>
       </div>
-      <p class="modal-note">进入后会用图片调用 <code>/api/ocr</code> 做真实识别（需要后端已配置 Key）。</p>
+      <p class="modal-note" id="upload-note">进入后会调用 OCR 接口做真实识别（需要先配置 API Key）。</p>
     </div>
   </div>
 
@@ -1475,19 +1560,83 @@
       </div>
       <div class="print-sheet">
         <div class="print-head"><span>English Desk</span><span>复习单预览</span></div>
-        <h4>English · 明日重点单词</h4>
+        <h4 id="print-sheet-title">English · 单词复习单</h4>
         <p class="print-meta">姓名：____________　日期：____________　得分：________</p>
-        <div id="print-words"></div>
-        <div class="print-practice">
-          <strong>造句 / 翻译练习</strong>
-          <p>1. 用其中一个重点词写一个完整句子：______________________________________</p>
-          <p id="print-translate">2. 把“环境”翻译成英文：____________________</p>
+        <div class="print-section">
+          <strong class="print-section-title">一、单词表</strong>
+          <div id="print-words"></div>
         </div>
-        <p class="print-foot">本页为页面内即时生成的可打印预览；真正的 .docx 由「生成 Word 复习单」调用本机后端生成。</p>
+        <div class="print-section">
+          <strong class="print-section-title">二、翻译练习（看中文写英文）</strong>
+          <div id="print-translate"></div>
+        </div>
+        <div class="print-section print-answer-page">
+          <strong class="print-section-title">参考答案（独立答案页）</strong>
+          <div id="print-answers"></div>
+        </div>
+        <p class="print-foot" id="print-foot">本页为页面内即时生成的复习单预览，题目与答案来自同一份词表；打印时答案页会另起一页。</p>
       </div>
       <div class="modal-actions">
         <button class="outline-button" id="cancel-print" type="button">关闭</button>
         <button class="primary-button" id="print-button" type="button">打印这张复习单</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== API 设置：仅 file:// 直连模式使用浏览器 localStorage 保存 Key。 ===== -->
+  <div class="modal-backdrop" id="settings-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <div class="modal-head">
+        <div>
+          <div class="modal-eyebrow">API SETTINGS</div>
+          <h3 id="settings-title">浏览器直连 API</h3>
+        </div>
+        <button class="modal-close" id="close-settings" type="button" aria-label="关闭设置">×</button>
+      </div>
+      <p class="modal-lead">本页直接从浏览器调用你选择的 AI 提供方。官方 DeepSeek 与第三方中转站分别保存各自的 Key，不会互相复用；Key 只保存在当前浏览器的 localStorage 中，不会写入 HTML、仓库文件、URL 或请求历史，但页面脚本与开发者工具仍可读取它，请勿在公用电脑上保存。</p>
+      <div class="settings-form">
+        <span class="field-label">API 提供方</span>
+        <div class="provider-switch" role="radiogroup" aria-label="API 提供方">
+          <label class="provider-option">
+            <input type="radio" name="api-provider" id="provider-official" value="official">
+            <span>官方 DeepSeek<small>官方端点 · 默认</small></span>
+          </label>
+          <label class="provider-option">
+            <input type="radio" name="api-provider" id="provider-relay" value="relay">
+            <span>第三方中转站<small>自定义 Base URL / 渠道 / 模型</small></span>
+          </label>
+        </div>
+
+        <div class="provider-panel" id="official-settings">
+          <label class="field-label" for="official-baseurl">官方端点</label>
+          <input class="answer-input" id="official-baseurl" type="text" value="https://api.deepseek.com" readonly>
+          <label class="field-label" for="official-apikey">官方 API Key</label>
+          <input class="answer-input" id="official-apikey" type="password" autocomplete="off" placeholder="sk-...">
+          <label class="field-label" for="official-chatmodel">文本模型（词卡 / 批改）</label>
+          <input class="answer-input" id="official-chatmodel" type="text" autocomplete="off" placeholder="deepseek-chat">
+          <label class="field-label" for="official-visionmodel">视觉模型（图片识别）</label>
+          <input class="answer-input" id="official-visionmodel" type="text" autocomplete="off" placeholder="deepseek-chat">
+          <p class="settings-hint">官方公开模型为 deepseek-chat / deepseek-reasoner；若账号提供支持图片输入的视觉模型，请填写准确名称。若模型拒绝图片，页面会显示官方返回的真实错误并保留图片，不会自动改用中转站。</p>
+        </div>
+
+        <div class="provider-panel" id="relay-settings" hidden>
+          <label class="field-label" for="settings-baseurl">中转站 Base URL</label>
+          <input class="answer-input" id="settings-baseurl" type="text" autocomplete="off" placeholder="https://www.micuapi.ai">
+          <label class="field-label" for="settings-channel">渠道（可选，仅本地备注）</label>
+          <input class="answer-input" id="settings-channel" type="text" autocomplete="off" placeholder="例如：米醋 / 默认渠道">
+          <label class="field-label" for="settings-relaykey">中转站 API Key</label>
+          <input class="answer-input" id="settings-relaykey" type="password" autocomplete="off" placeholder="sk-...">
+          <label class="field-label" for="settings-chatmodel">文本模型（词卡 / 批改）</label>
+          <input class="answer-input" id="settings-chatmodel" type="text" autocomplete="off" placeholder="deepseek-chat">
+          <label class="field-label" for="settings-visionmodel">视觉模型（图片识别）</label>
+          <input class="answer-input" id="settings-visionmodel" type="text" autocomplete="off" placeholder="deepseek-flash">
+        </div>
+      </div>
+      <div class="api-status info" id="settings-status" role="status" aria-live="polite"></div>
+      <p class="modal-note">官方端点已实测允许来自本地文件的 CORS 预检（Origin: null）；中转站的 CORS 由各自服务商决定，失败时页面会显示真实错误，需改用本机 Node 服务模式或换配置。渠道仅作为本地备注保存，不会写入请求。</p>
+      <div class="modal-actions">
+        <button class="outline-button" id="clear-settings" type="button">清除已保存的 Key</button>
+        <button class="primary-button" id="save-settings" type="button">保存设置</button>
       </div>
     </div>
   </div>
@@ -1498,8 +1647,30 @@
     (function () {
       "use strict";
 
-      /* ===== 接口层：页面只调用本机后端代理，DeepSeek Key 永不进入前端。 ===== */
+      /* ===== 运行模式：file:// 直连 API；通过 node server.js 打开则走本机代理。 =====
+         直连模式的 Key 只存在当前浏览器 localStorage，页面脚本可读取；
+         不写入 HTML、仓库文件、URL、请求历史或日志。 */
       const API_BASE = "/api";
+      const FILE_MODE = window.location.protocol === "file:";
+      const SETTINGS_KEY = "english-desk-api-settings-v2";
+      const LEGACY_SETTINGS_KEY = "english-desk-api-settings-v1";
+      const OFFICIAL_BASE_URL = "https://api.deepseek.com";
+      const SETTINGS_DEFAULTS = {
+        provider: "official",
+        official: {
+          apiKey: "",
+          chatModel: "deepseek-chat",
+          visionModel: "deepseek-chat"
+        },
+        relay: {
+          baseUrl: "",
+          channel: "",
+          apiKey: "",
+          chatModel: "deepseek-chat",
+          visionModel: "deepseek-flash"
+        }
+      };
+      const REQUEST_TIMEOUT_MS = 90000;
 
       class ApiError extends Error {
         constructor(status, code, message) {
@@ -1510,15 +1681,117 @@
         }
       }
 
+      function cleanSetting(value, fallback) {
+        return typeof value === "string" && value.trim() ? value.trim() : fallback;
+      }
+
+      /* 规范化 Base URL：允许用户填裸域或 /v1，统一去掉末尾 /v1，
+         请求时再拼 /v1/chat/completions，避免 /v1/v1/... 或命中网页 HTML。 */
+      function normalizeApiBaseUrl(raw) {
+        let value = String(raw || "").trim();
+        if (value && !/^https?:\/\//i.test(value)) { value = "https://" + value; }
+        try {
+          const url = new URL(value);
+          if (url.hostname.toLowerCase() === "micuapi.ai") { url.hostname = "www.micuapi.ai"; }
+          url.pathname = url.pathname.replace(/\/+$/, "").replace(/\/v1$/i, "");
+          url.search = "";
+          url.hash = "";
+          return url.toString().replace(/\/$/, "");
+        } catch (error) {
+          return value.replace(/\/+$/, "").replace(/\/v1$/i, "");
+        }
+      }
+
+      function loadApiSettings() {
+        const defaults = {
+          provider: SETTINGS_DEFAULTS.provider,
+          official: Object.assign({}, SETTINGS_DEFAULTS.official),
+          relay: Object.assign({}, SETTINGS_DEFAULTS.relay)
+        };
+        try {
+          const legacyText = window.localStorage.getItem(LEGACY_SETTINGS_KEY);
+          const rawText = window.localStorage.getItem(SETTINGS_KEY);
+          if (!rawText && legacyText) {
+            // v1 只有一套「米醋」配置，迁移为中转站配置，避免把旧 Key 当成官方 Key。
+            const legacy = JSON.parse(legacyText || "{}");
+            defaults.provider = "relay";
+            defaults.relay = {
+              baseUrl: normalizeApiBaseUrl(cleanSetting(legacy.baseUrl, SETTINGS_DEFAULTS.relay.baseUrl)),
+              channel: cleanSetting(legacy.channel, ""),
+              apiKey: cleanSetting(legacy.apiKey, ""),
+              chatModel: cleanSetting(legacy.chatModel, SETTINGS_DEFAULTS.relay.chatModel),
+              visionModel: cleanSetting(legacy.visionModel, SETTINGS_DEFAULTS.relay.visionModel)
+            };
+            return defaults;
+          }
+          const raw = rawText ? JSON.parse(rawText) : {};
+          const official = raw && raw.official && typeof raw.official === "object" ? raw.official : {};
+          const relay = raw && raw.relay && typeof raw.relay === "object" ? raw.relay : {};
+          return {
+            provider: normalizeProvider(raw && raw.provider),
+            official: {
+              apiKey: cleanSetting(official.apiKey, ""),
+              chatModel: cleanSetting(official.chatModel, SETTINGS_DEFAULTS.official.chatModel),
+              // 官方视觉模型允许留空：留空时 OCR 会提示配置，而不是悄悄换成别的提供方。
+              visionModel: typeof official.visionModel === "string"
+                ? official.visionModel.trim()
+                : SETTINGS_DEFAULTS.official.visionModel
+            },
+            relay: {
+              baseUrl: cleanSetting(relay.baseUrl, SETTINGS_DEFAULTS.relay.baseUrl),
+              channel: cleanSetting(relay.channel, ""),
+              apiKey: cleanSetting(relay.apiKey, ""),
+              chatModel: cleanSetting(relay.chatModel, SETTINGS_DEFAULTS.relay.chatModel),
+              visionModel: cleanSetting(relay.visionModel, SETTINGS_DEFAULTS.relay.visionModel)
+            }
+          };
+        } catch (error) {
+          return defaults;
+        }
+      }
+
+      let apiSettings = loadApiSettings();
+
+      function normalizeProvider(value) { return value === "relay" ? "relay" : "official"; }
+
+      function providerLabel(provider) {
+        return normalizeProvider(provider) === "relay" ? "第三方中转站" : "官方 DeepSeek";
+      }
+
+      function currentProvider() { return normalizeProvider(apiSettings.provider); }
+
+      function activeConfig() { return currentProvider() === "relay" ? apiSettings.relay : apiSettings.official; }
+
+      /* 官方固定使用官方端点；中转站使用用户填写的 Base URL。 */
+      function activeBaseUrl() {
+        return currentProvider() === "relay"
+          ? normalizeApiBaseUrl(apiSettings.relay.baseUrl)
+          : OFFICIAL_BASE_URL;
+      }
+
       function apiPath(path) { return API_BASE + path; }
 
-      /* 统一把后端的 {ok:false,error:{code,message}} 转成可读的 ApiError。 */
+      function truncateText(value, max) {
+        const text = String(value == null ? "" : value);
+        return text.length > max ? text.slice(0, max) + "…" : text;
+      }
+
+      /* 任何面向用户的错误信息都先剔除 Key，避免直连模式泄露密钥。 */
+      function redactSensitive(value) {
+        let text = String(value == null ? "" : value);
+        [apiSettings.official.apiKey, apiSettings.relay.apiKey].forEach(function (key) {
+          if (key) { text = text.split(key).join("[redacted]"); }
+        });
+        return text.replace(/\bsk-[A-Za-z0-9_-]{6,}/g, "[redacted]");
+      }
+
+      /* 统一把本机后端的 {ok:false,error:{code,message}} 转成可读的 ApiError。 */
       async function callApi(path, options) {
         let response;
         try {
           response = await fetch(apiPath(path), options);
         } catch (error) {
-          throw new ApiError(0, "NETWORK_ERROR", "无法连接本机后端（" + apiPath(path) + "）。请先在 server 目录运行 node server.js。");
+          throw new ApiError(0, "NETWORK_ERROR", "无法连接本机后端（" + apiPath(path) + "）。请先在 server 目录运行 node server.js，或直接双击 HTML 使用浏览器直连模式。");
         }
         const raw = await response.text();
         let payload = null;
@@ -1530,7 +1803,7 @@
           throw new ApiError(
             response.status,
             body && body.code ? body.code : "HTTP_" + response.status,
-            body && body.message ? body.message : "请求失败（HTTP " + response.status + "）"
+            redactSensitive(body && body.message ? body.message : "请求失败（HTTP " + response.status + "）")
           );
         }
         if (payload === null) {
@@ -1539,7 +1812,381 @@
         return payload;
       }
 
+      /* 浏览器直连：官方固定官方端点，中转站使用用户 Base URL；两者均为 POST {Base}/v1/chat/completions。 */
+      async function chatDirect(options) {
+        const provider = currentProvider();
+        const config = activeConfig();
+        const baseUrl = activeBaseUrl();
+        if (!config.apiKey) {
+          throw new ApiError(503, "NO_KEY", "尚未配置" + providerLabel(provider) + " API Key：请点右上角「API 设置」填写后重试；不会自动切换到其他提供方。");
+        }
+        if (!baseUrl) {
+          throw new ApiError(500, "NO_BASE_URL", "尚未配置" + providerLabel(provider) + "的 Base URL。");
+        }
+        const timeoutMs = Math.max(1000, options.timeoutMs || REQUEST_TIMEOUT_MS);
+        const controller = new AbortController();
+        const timer = window.setTimeout(function () { controller.abort(); }, timeoutMs);
+        let response;
+        try {
+          response = await fetch(baseUrl + "/v1/chat/completions", {
+            method: "POST",
+            mode: "cors",
+            credentials: "omit",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + config.apiKey
+            },
+            body: JSON.stringify({
+              model: options.model,
+              messages: options.messages,
+              temperature: options.temperature === undefined ? 0.2 : options.temperature,
+              max_tokens: options.maxTokens || 2048,
+              stream: false,
+              ...(options.jsonMode ? { response_format: { type: "json_object" } } : {})
+            }),
+            signal: controller.signal
+          });
+        } catch (error) {
+          const reason = error && error.name === "AbortError"
+            ? "请求超时（" + Math.round(timeoutMs / 1000) + " 秒）"
+            : (error && error.message);
+          throw new ApiError(0, "NETWORK_ERROR",
+            "浏览器直连" + providerLabel(provider) + "失败：" + redactSensitive(reason || "网络错误") +
+            "。请检查 Base URL、网络连接，以及该 API 是否允许本地文件跨域调用；不会自动切换到其他提供方。");
+        } finally {
+          window.clearTimeout(timer);
+        }
+
+        const rawText = await response.text().catch(function () { return ""; });
+        if (!response.ok) {
+          throw new ApiError(response.status, "UPSTREAM_" + response.status,
+            providerLabel(provider) + " API 返回 HTTP " + response.status + "：" +
+            (redactSensitive(truncateText(rawText, 300)) || "无响应内容"));
+        }
+        let payload;
+        try {
+          payload = JSON.parse(rawText);
+        } catch (error) {
+          throw new ApiError(502, "BAD_RESPONSE", "AI 返回内容不是合法 JSON。");
+        }
+        const message = payload && payload.choices && payload.choices[0] && payload.choices[0].message;
+        const content = message ? message.content : "";
+        if (typeof content !== "string" || !content.trim()) {
+          throw new ApiError(502, "EMPTY_RESPONSE", "AI 返回内容为空，请重试。");
+        }
+        return content;
+      }
+
+      /* 从模型输出里截取第一个完整 JSON 对象，容忍代码块围栏与前后解释文字。 */
+      function extractJson(text) {
+        const body = String(text == null ? "" : text).trim()
+          .replace(/^```(?:json)?\s*/i, "")
+          .replace(/```\s*$/i, "");
+        const start = body.indexOf("{");
+        if (start === -1) { throw new ApiError(502, "BAD_JSON", "AI 返回内容里没有 JSON 对象。"); }
+        let depth = 0;
+        let inString = false;
+        let escaped = false;
+        let end = -1;
+        for (let i = start; i < body.length; i += 1) {
+          const char = body[i];
+          if (inString) {
+            if (escaped) { escaped = false; }
+            else if (char === "\\") { escaped = true; }
+            else if (char === '"') { inString = false; }
+            continue;
+          }
+          if (char === '"') { inString = true; continue; }
+          if (char === "{") { depth += 1; }
+          else if (char === "}") {
+            depth -= 1;
+            if (depth === 0) { end = i; break; }
+          }
+        }
+        if (end === -1) { throw new ApiError(502, "BAD_JSON", "AI 返回的 JSON 不完整。"); }
+        try {
+          return JSON.parse(body.slice(start, end + 1));
+        } catch (error) {
+          throw new ApiError(502, "BAD_JSON", "AI 返回的 JSON 无法解析。");
+        }
+      }
+
+      function asString(value) {
+        if (typeof value === "string") { return value.trim(); }
+        if (typeof value === "number" || typeof value === "boolean") { return String(value); }
+        return "";
+      }
+
+      function unwrapList(value, keys) {
+        if (Array.isArray(value)) { return value; }
+        if (!value || typeof value !== "object") { return []; }
+        for (let i = 0; i < keys.length; i += 1) {
+          if (Array.isArray(value[keys[i]])) { return value[keys[i]]; }
+        }
+        return [];
+      }
+
+      const DIRECT_SYSTEM_JSON = "你是一名严谨的英语教学助手。你只输出 JSON，不要输出任何解释、Markdown 代码块或多余文字。所有面向学习者的说明使用简体中文。";
+      const DIRECT_JSON_FENCE = "只输出 JSON，不要输出代码块或解释。";
+
+      function directOcrPrompt(purpose) {
+        const scene = purpose === "grade"
+          ? "这是一张学生英语作业照片，里面可能有题目和学生的手写作答"
+          : "这是一张学生英语学习材料照片，里面可能有单词表、课文或练习";
+        return [
+          "任务类型: ocr",
+          scene + "（可能是印刷体也可能是手写体）。请完成两件事：",
+          "1) 逐字转录图片中的英文与中文，保留换行；不要翻译、不要纠错、不要自行补全看不清的内容；",
+          "2) 提取其中的英文单词（含词组），按出现顺序排列、忽略大小写去重、最多 60 个；忽略纯数字、标点和中文。",
+          '输出格式：{"text":"完整转录文本","words":["word1","word2"]}',
+          DIRECT_JSON_FENCE
+        ].join("\n");
+      }
+
+      function directWordsPrompt(words) {
+        return [
+          "任务类型: words",
+          "请为下列英语单词各生成一张学习卡片：",
+          ...words,
+          "要求：phonetic 用国际音标并带斜杠（如 /ˈækjərət/）；meaning 为简体中文释义并标注词性；hint 为一句中文记忆或易错点提示。",
+          '输出格式：{"items":[{"word":"原词","phonetic":"/.../","meaning":"...","hint":"..."}]}',
+          DIRECT_JSON_FENCE
+        ].join("\n");
+      }
+
+      const DIRECT_GRADE_HINT = {
+        words: "这是单词练习（可能含拼写错误），请指出拼写错误并给出正确拼写。",
+        sentences: "这是句子练习，请指出语法、用词、时态、标点等问题并给出更地道的表达。",
+        reading: "这是阅读理解作答，请依据原文判断答案是否正确，并给出参考答案与依据。"
+      };
+
+      function directGradePrompt(text, kind, context) {
+        const lines = ["任务类型: grade", DIRECT_GRADE_HINT[kind] || DIRECT_GRADE_HINT.words];
+        if (context) {
+          lines.push("【题目或原文】", context, "【学生作答】");
+        } else {
+          lines.push("【学生作答】");
+        }
+        lines.push(text);
+        lines.push("请输出：summary（总体评价，中文，1-2 句）、correction（逐条批改说明：错在哪里、正确写法，中文，可分条换行）、suggestion（建议改写或参考答案；若全对可给出提升建议，中文）。");
+        lines.push('输出格式：{"summary":"...","correction":"...","suggestion":"..."}');
+        lines.push(DIRECT_JSON_FENCE);
+        return lines.join("\n");
+      }
+
+      function directGradeBatchPrompt(items) {
+        const lines = [
+          "任务类型: grade-batch",
+          "这是一整轮中文到英文的翻译练习。请逐题判断学生翻译是否正确，并给出简短批改说明。"
+        ];
+        items.forEach(function (item) {
+          lines.push("【第 " + item.id + " 题】题目（中文释义）：" + item.question);
+          lines.push("学生翻译：" + item.answer);
+        });
+        lines.push("要求：results 必须与输入题目一一对应，id 使用输入中的 id；correct 为布尔值（true 表示翻译正确）；summary 为该题是否正确的中文简述；correction 为错误原因（全对可写“无”）；suggestion 为参考答案或改进建议。");
+        lines.push('输出格式：{"results":[{"id":"0","correct":true,"summary":"...","correction":"...","suggestion":"..."}]}');
+        lines.push(DIRECT_JSON_FENCE);
+        return lines.join("\n");
+      }
+
+      const DIRECT_WORD_PATTERN = /^[A-Za-z][A-Za-z'’\- ]{0,39}$/;
+
+      function dedupeDirectWords(items) {
+        const seen = new Set();
+        const out = [];
+        items.forEach(function (item) {
+          const word = asString(item).replace(/\s+/g, " ").trim();
+          if (!word || !DIRECT_WORD_PATTERN.test(word)) { return; }
+          const key = word.toLowerCase();
+          if (seen.has(key)) { return; }
+          seen.add(key);
+          out.push(word);
+        });
+        return out.slice(0, 60);
+      }
+
+      function normalizeDirectCorrect(value) {
+        if (value === true || value === 1) { return true; }
+        if (value === false || value === 0) { return false; }
+        const text = asString(value).toLowerCase();
+        if (["true", "correct", "yes", "正确", "对"].indexOf(text) !== -1) { return true; }
+        if (["false", "incorrect", "wrong", "no", "错误", "错"].indexOf(text) !== -1) { return false; }
+        return null;
+      }
+
+      async function directOcr(image, purpose) {
+        const config = activeConfig();
+        if (!config.visionModel) {
+          throw new ApiError(400, "NO_VISION_MODEL",
+            "当前是" + providerLabel() + "模式，尚未配置视觉模型：请在「API 设置」填写支持图片输入的模型，或手动切换提供方。图片已保留，可直接重试。");
+        }
+        const content = await chatDirect({
+          model: config.visionModel,
+          messages: [
+            { role: "system", content: DIRECT_SYSTEM_JSON },
+            {
+              role: "user",
+              content: [
+                { type: "text", text: directOcrPrompt(purpose) },
+                { type: "image_url", image_url: { url: image } }
+              ]
+            }
+          ],
+          temperature: 0,
+          maxTokens: 4096,
+          jsonMode: false
+        });
+        const data = extractJson(content);
+        const text = asString(data && (data.text || data.content || data.transcript));
+        const words = dedupeDirectWords(unwrapList(data && (data.words || data.items || data.list || data), ["words", "items", "list"]));
+        if (!text && words.length === 0) {
+          throw new ApiError(502, "EMPTY_OCR", "未能从图片中识别到内容，请换一张更清晰、包含英文的图片后重试。");
+        }
+        return { text: text, words: words };
+      }
+
+      async function directWords(words) {
+        if (!Array.isArray(words) || words.length === 0) {
+          throw new ApiError(400, "BAD_WORDS", "words 必须是非空字符串数组。");
+        }
+        if (words.length > 50) {
+          throw new ApiError(400, "BAD_WORDS", "words 一次最多 50 个单词。");
+        }
+        const content = await chatDirect({
+          model: activeConfig().chatModel,
+          messages: [
+            { role: "system", content: DIRECT_SYSTEM_JSON },
+            { role: "user", content: directWordsPrompt(words) }
+          ],
+          temperature: 0.3,
+          maxTokens: 4096,
+          jsonMode: true
+        });
+        const raw = unwrapList(extractJson(content), ["items", "words", "cards", "data", "list"]);
+        const byWord = new Map();
+        raw.forEach(function (item) {
+          const card = {
+            word: asString(typeof item === "string" ? item : item && (item.word || item.term || item.text)),
+            phonetic: asString(typeof item === "string" ? "" : item && (item.phonetic || item.ipa || item.pronunciation)),
+            meaning: asString(typeof item === "string" ? "" : item && (item.meaning || item.definition || item.translation)),
+            hint: asString(typeof item === "string" ? "" : item && (item.hint || item.tip || item.note))
+          };
+          if (!card.word) { return; }
+          const key = card.word.toLowerCase();
+          if (!byWord.has(key)) { byWord.set(key, card); }
+        });
+        if (byWord.size === 0) {
+          throw new ApiError(502, "EMPTY_WORDS", "AI 未返回可用的单词卡片，请重试。");
+        }
+        const requested = [...new Set(words.map(function (word) { return asString(word); }))].filter(Boolean).slice(0, 50);
+        const ordered = requested.map(function (word) {
+          const hit = byWord.get(word.toLowerCase());
+          if (!hit) { return { word: word, phonetic: "", meaning: "", hint: "" }; }
+          return { word: hit.word || word, phonetic: hit.phonetic, meaning: hit.meaning, hint: hit.hint };
+        });
+        const requestedKeys = new Set(requested.map(function (word) { return word.toLowerCase(); }));
+        byWord.forEach(function (card, key) {
+          if (!requestedKeys.has(key)) { ordered.push(card); }
+        });
+        return ordered;
+      }
+
+      async function directGrade(text, kind, context) {
+        if (!text || !String(text).trim()) {
+          throw new ApiError(400, "BAD_TEXT", "缺少 text 字段：需要待批改的文本。");
+        }
+        const content = await chatDirect({
+          model: activeConfig().chatModel,
+          messages: [
+            { role: "system", content: DIRECT_SYSTEM_JSON },
+            { role: "user", content: directGradePrompt(text, kind, context) }
+          ],
+          temperature: 0.2,
+          maxTokens: 3000,
+          jsonMode: true
+        });
+        const data = extractJson(content);
+        const corrections = Array.isArray(data && data.corrections)
+          ? data.corrections.map(function (item) {
+              if (typeof item === "string") { return item.trim(); }
+              if (!item || typeof item !== "object") { return ""; }
+              const original = asString(item.original || item.error);
+              const fixed = asString(item.correction || item.correct || item.fix);
+              const reason = asString(item.reason || item.explain || item.comment);
+              return [original && "「" + original + "」", fixed && "→ 「" + fixed + "」", reason].filter(Boolean).join(" ");
+            }).filter(Boolean).join("\n")
+          : "";
+        const summary = asString(data && (data.summary || data.overall || data.comment));
+        const correction = asString(data && (data.correction || data.corrections_detail || data.detail)) || corrections;
+        const suggestion = asString(data && (data.suggestion || data.suggestions || data.revised || data.answer));
+        if (!summary && !correction && !suggestion) {
+          throw new ApiError(502, "EMPTY_GRADE", "AI 未返回可用的批改结果，请重试。");
+        }
+        return { summary: summary, correction: correction, suggestion: suggestion };
+      }
+
+      async function directGradeBatch(items) {
+        if (!Array.isArray(items) || items.length === 0) {
+          throw new ApiError(400, "BAD_BATCH", "items 必须是非空数组。");
+        }
+        const normalized = items.map(function (item, index) {
+          return {
+            id: asString(item && item.id) || String(index),
+            question: asString(item && item.question),
+            answer: asString(item && item.answer)
+          };
+        });
+        if (normalized.some(function (item) { return !item.answer; })) {
+          throw new ApiError(400, "BAD_BATCH", "批量批改的每一项都必须有非空 answer。");
+        }
+        const content = await chatDirect({
+          model: activeConfig().chatModel,
+          messages: [
+            { role: "system", content: DIRECT_SYSTEM_JSON },
+            { role: "user", content: directGradeBatchPrompt(normalized) }
+          ],
+          temperature: 0.2,
+          maxTokens: Math.min(8000, 600 + normalized.length * 400),
+          jsonMode: true
+        });
+        const raw = unwrapList(extractJson(content), ["results", "items", "data", "list"]);
+        const byId = new Map();
+        raw.forEach(function (item) {
+          if (!item || typeof item !== "object") { return; }
+          const id = asString(item.id);
+          if (!id) { return; }
+          byId.set(id, item);
+        });
+        return normalized.map(function (input) {
+          const hit = byId.get(input.id);
+          if (!hit) {
+            throw new ApiError(502, "BAD_BATCH", "AI 返回缺少第 " + input.id + " 题的结果，请重试。");
+          }
+          return {
+            id: input.id,
+            correct: normalizeDirectCorrect(hit.correct),
+            summary: asString(hit.summary || hit.overall || hit.comment),
+            correction: asString(hit.correction || hit.detail),
+            suggestion: asString(hit.suggestion || hit.answer || hit.revised)
+          };
+        });
+      }
+
+      /* file:// 模式下把后端接口路径映射为浏览器直连调用。 */
+      function directPost(path, body) {
+        const payload = body || {};
+        if (path === "/ocr") { return directOcr(payload.image, payload.purpose); }
+        if (path === "/words") { return directWords(payload.words); }
+        if (path === "/grade") { return directGrade(payload.text, payload.kind, payload.context); }
+        // 与服务端 POST /api/grade-batch 的响应结构保持一致，统一为 { results }。
+        if (path === "/grade-batch") {
+          return directGradeBatch(payload.items).then(function (results) { return { results: results }; });
+        }
+        return Promise.reject(new ApiError(404, "NOT_FOUND", "直连模式不支持该接口：" + path));
+      }
+
       function postJson(path, body) {
+        if (FILE_MODE) { return directPost(path, body); }
         return callApi(path, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1548,9 +2195,213 @@
       }
 
       function describeApiError(error) {
-        if (error instanceof ApiError) { return error.message; }
-        return error && error.message ? error.message : "未知错误";
+        if (error instanceof ApiError) { return redactSensitive(error.message); }
+        return redactSensitive(error && error.message ? error.message : "未知错误");
       }
+
+      /* ===== 浏览器内生成 DOCX（不依赖后端与第三方 CDN）=====
+         OOXML 三个最小部件 + STORED 模式 ZIP；题目与答案来自同一份词表。 */
+      /* DOCX_BUILDER_START */
+      const DOCX_XML_HEADER = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+      const DOCX_CONTENT_TYPES = DOCX_XML_HEADER +
+        '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+        '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+        '<Default Extension="xml" ContentType="application/xml"/>' +
+        '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
+        '</Types>';
+      const DOCX_RELS = DOCX_XML_HEADER +
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>' +
+        '</Relationships>';
+
+      function docxEscape(value) {
+        return String(value == null ? "" : value).replace(/[&<>"']/g, function (char) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[char];
+        });
+      }
+
+      function docxRun(text, options) {
+        const opts = options || {};
+        const props = ['<w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:eastAsia="宋体"/>'];
+        if (opts.bold) { props.push("<w:b/>"); }
+        if (opts.size) { props.push('<w:sz w:val="' + opts.size + '"/>'); }
+        return '<w:r><w:rPr>' + props.join("") + '</w:rPr><w:t xml:space="preserve">' + docxEscape(text) + '</w:t></w:r>';
+      }
+
+      function docxParagraph(text, options) {
+        const opts = options || {};
+        const pPr = [];
+        if (opts.center) { pPr.push('<w:jc w:val="center"/>'); }
+        if (opts.after !== undefined) { pPr.push('<w:spacing w:after="' + opts.after + '"/>'); }
+        return '<w:p>' + (pPr.length ? '<w:pPr>' + pPr.join("") + '</w:pPr>' : "") + docxRun(text, opts) + '</w:p>';
+      }
+
+      function docxHeading(text) {
+        return docxParagraph(text, { bold: true, size: 28, after: 120 });
+      }
+
+      function docxTable(rows) {
+        const borders = '<w:tblBorders>' +
+          ['top', 'left', 'bottom', 'right', 'insideH', 'insideV'].map(function (side) {
+            return '<w:' + side + ' w:val="single" w:sz="4" w:color="CFD8CB"/>';
+          }).join("") + '</w:tblBorders>';
+        const body = rows.map(function (cells) {
+          return '<w:tr>' + cells.map(function (cell) {
+            return '<w:tc><w:tcPr><w:tcW w:w="' + (cell.width || 2400) + '" w:type="dxa"/></w:tcPr>' +
+              docxParagraph(cell.text, { bold: Boolean(cell.bold), size: 22 }) +
+              '</w:tc>';
+          }).join("") + '</w:tr>';
+        }).join("");
+        return '<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/>' + borders + '</w:tblPr>' + body + '</w:tbl>';
+      }
+
+      function buildReviewDocx(words, title) {
+        const list = (Array.isArray(words) ? words : []).map(function (item) {
+          return {
+            word: String(item && item.word ? item.word : "").trim(),
+            meaning: String(item && item.meaning ? item.meaning : "").trim()
+          };
+        }).filter(function (item) { return item.word; });
+        const docTitle = (title && String(title).trim()) || "英语复习单";
+        const today = new Date().toLocaleDateString("zh-CN");
+        const parts = [];
+        parts.push(docxParagraph(docTitle, { bold: true, size: 36, center: true, after: 200 }));
+        parts.push(docxParagraph("姓名：____________　　日期：" + today + "　　得分：__________", { size: 20, after: 160 }));
+
+        parts.push(docxHeading("一、单词表"));
+        parts.push(docxTable([
+          [{ text: "单词", bold: true, width: 3200 }, { text: "释义", bold: true, width: 5800 }]
+        ].concat(list.map(function (item) {
+          return [{ text: item.word, width: 3200 }, { text: item.meaning || "（释义待补充）", width: 5800 }];
+        }))));
+
+        parts.push(docxHeading("二、默写练习（看中文写英文）"));
+        list.forEach(function (item, index) {
+          parts.push(docxParagraph((index + 1) + ". " + (item.meaning || "（释义待补充）") + "　＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿", { size: 22, after: 160 }));
+        });
+
+        parts.push(docxHeading("三、翻译练习（看中文写英文）"));
+        list.forEach(function (item, index) {
+          parts.push(docxParagraph((index + 1) + ". 把“" + (item.meaning || "（释义待补充）") + "”翻译成英文：__________________________", { size: 22, after: 160 }));
+        });
+
+        /* 独立答案页：新页开始，题号与练习一一对应。 */
+        parts.push('<w:p><w:r><w:br w:type="page"/></w:r></w:p>');
+        parts.push(docxHeading("参考答案（独立答案页）"));
+        list.forEach(function (item, index) {
+          parts.push(docxParagraph((index + 1) + ". " + item.word + "　" + (item.meaning || ""), { size: 22, after: 100 }));
+        });
+
+        const documentXml = DOCX_XML_HEADER +
+          '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' +
+          parts.join("") +
+          '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134"/></w:sectPr>' +
+          '</w:body></w:document>';
+
+        return docxStoreZip([
+          { name: "[Content_Types].xml", content: DOCX_CONTENT_TYPES },
+          { name: "_rels/.rels", content: DOCX_RELS },
+          { name: "word/document.xml", content: documentXml }
+        ]);
+      }
+
+      const DOCX_CRC_TABLE = (function () {
+        const table = new Uint32Array(256);
+        for (let n = 0; n < 256; n += 1) {
+          let c = n;
+          for (let k = 0; k < 8; k += 1) {
+            c = (c & 1) ? (0xedb88320 ^ (c >>> 1)) : (c >>> 1);
+          }
+          table[n] = c >>> 0;
+        }
+        return table;
+      })();
+
+      function docxCrc32(bytes) {
+        let crc = 0xffffffff;
+        for (let i = 0; i < bytes.length; i += 1) {
+          crc = DOCX_CRC_TABLE[(crc ^ bytes[i]) & 0xff] ^ (crc >>> 8);
+        }
+        return (crc ^ 0xffffffff) >>> 0;
+      }
+
+      /* ZIP STORED 模式：文本量很小，不压缩即可被 Word 正常打开。 */
+      function docxStoreZip(files) {
+        const encoder = new TextEncoder();
+        const records = files.map(function (file) {
+          const name = encoder.encode(file.name);
+          const data = encoder.encode(file.content);
+          return { name: name, data: data, crc: docxCrc32(data) };
+        });
+        const localParts = [];
+        const centralParts = [];
+        let offset = 0;
+        const dosTime = 0;
+        const dosDate = 33;
+        records.forEach(function (record) {
+          const local = new Uint8Array(30 + record.name.length);
+          const lv = new DataView(local.buffer);
+          lv.setUint32(0, 0x04034b50, true);
+          lv.setUint16(4, 20, true);
+          lv.setUint16(6, 0x0800, true);
+          lv.setUint16(8, 0, true);
+          lv.setUint16(10, dosTime, true);
+          lv.setUint16(12, dosDate, true);
+          lv.setUint32(14, record.crc, true);
+          lv.setUint32(18, record.data.length, true);
+          lv.setUint32(22, record.data.length, true);
+          lv.setUint16(26, record.name.length, true);
+          lv.setUint16(28, 0, true);
+          local.set(record.name, 30);
+          localParts.push(local, record.data);
+
+          const central = new Uint8Array(46 + record.name.length);
+          const cv = new DataView(central.buffer);
+          cv.setUint32(0, 0x02014b50, true);
+          cv.setUint16(4, 20, true);
+          cv.setUint16(6, 20, true);
+          cv.setUint16(8, 0x0800, true);
+          cv.setUint16(10, 0, true);
+          cv.setUint16(12, dosTime, true);
+          cv.setUint16(14, dosDate, true);
+          cv.setUint32(16, record.crc, true);
+          cv.setUint32(20, record.data.length, true);
+          cv.setUint32(24, record.data.length, true);
+          cv.setUint16(28, record.name.length, true);
+          cv.setUint16(30, 0, true);
+          cv.setUint16(32, 0, true);
+          cv.setUint16(34, 0, true);
+          cv.setUint16(36, 0, true);
+          cv.setUint32(38, 0, true);
+          cv.setUint32(42, offset, true);
+          central.set(record.name, 46);
+          centralParts.push(central);
+
+          offset += local.length + record.data.length;
+        });
+
+        const centralSize = centralParts.reduce(function (sum, part) { return sum + part.length; }, 0);
+        const eocd = new Uint8Array(22);
+        const ev = new DataView(eocd.buffer);
+        ev.setUint32(0, 0x06054b50, true);
+        ev.setUint16(4, 0, true);
+        ev.setUint16(6, 0, true);
+        ev.setUint16(8, records.length, true);
+        ev.setUint16(10, records.length, true);
+        ev.setUint32(12, centralSize, true);
+        ev.setUint32(16, offset, true);
+        ev.setUint16(20, 0, true);
+
+        const total = localParts.reduce(function (sum, part) { return sum + part.length; }, 0) + centralSize + eocd.length;
+        const out = new Uint8Array(total);
+        let pos = 0;
+        localParts.forEach(function (part) { out.set(part, pos); pos += part.length; });
+        centralParts.forEach(function (part) { out.set(part, pos); pos += part.length; });
+        out.set(eocd, pos);
+        return out;
+      }
+      /* DOCX_BUILDER_END */
+
 
       /* FileReader：把所选图片读成 data URL，用于本地预览与发送给代理。 */
       function readFileAsDataUrl(file) {
@@ -1656,14 +2507,11 @@
         }
       ];
 
-      let errorWords = [
-        { word: "environment", meaning: "环境", count: 4 },
-        { word: "necessary", meaning: "必要的", count: 3 },
-        { word: "separate", meaning: "分开的；分离的", count: 2 }
-      ];
-      let tomorrowWords = ["environment", "necessary"];
-      let activeWord = 0;
+      /* 复习页不预置明文错词/重点词，避免在默写开始前泄露答案。 */
+      let errorWords = [];
+      let tomorrowWords = [];
       let activeMode = "dictation";
+      let rounds = { dictation: null, translation: null };
       let activeKind = "words";
       let toastTimer = null;
       let historyRecords = SEED_HISTORY.map(function (record) { return Object.assign({}, record); });
@@ -1857,6 +2705,7 @@
       function setOcrPanel(wrapId, boxId, text, words) {
         const wrap = $(wrapId);
         const box = $(boxId);
+        wrap.open = false;
         if (!text) {
           wrap.hidden = true;
           box.textContent = "";
@@ -1888,6 +2737,24 @@
         badge.appendChild(document.createTextNode(text));
       }
 
+      /* file:// 直连模式的状态取决于当前提供方是否保存了 Key。 */
+      function refreshApiBadge() {
+        if (FILE_MODE) {
+          const provider = currentProvider();
+          if (activeConfig().apiKey) {
+            backendState = "ready";
+            setApiBadge("", "浏览器直连 · " + providerLabel(provider) + " · 已配置 Key");
+          } else {
+            backendState = "nokey";
+            setApiBadge("warn", "浏览器直连 · " + providerLabel(provider) + " · 未配置 Key");
+          }
+          updatePracticeNote();
+          syncTryBadge();
+          return;
+        }
+        checkBackend();
+      }
+
       /* 启动时探测后端：只用于界面提示，不阻塞页面。 */
       function checkBackend() {
         callApi("/health", { method: "GET" }).then(function (payload) {
@@ -1907,16 +2774,177 @@
         });
       }
 
-      /* 复习/检查按钮的提示文案随后端状态变化。 */
+      /* 按运行模式调整页面文案，避免 file:// 模式仍声称“本机代理”。 */
+      function applyModeCopy() {
+        $("hero-badge").textContent = FILE_MODE
+          ? "浏览器直连 · 官方 DeepSeek / 中转站 · Key 存在本机浏览器"
+          : "本地服务代理 AI · Key 只在服务端";
+        $("history-note").textContent = FILE_MODE
+          ? "记录仅保存在当前页面内存中，关闭页面即清空；图片只发送到你当前选择的 AI 提供方。"
+          : "记录仅保存在当前页面内存中，关闭页面即清空；图片只发送到你本机运行的代理服务。";
+        $("upload-note").textContent = FILE_MODE
+          ? "进入后由浏览器直接调用当前选择的提供方做识别（需要先在「API 设置」填写对应 Key）。"
+          : "进入后会调用 /api/ocr 做真实识别（需要后端已配置 Key）。";
+        $("export-note").textContent = FILE_MODE
+          ? "预览并打印复习单；「生成 Word 复习单」在浏览器内直接生成包含练习与答案页的 .docx。"
+          : "预览并打印复习单；「生成 Word 复习单」会调用本机后端生成包含练习与答案页的 .docx。";
+        $("grade-side-note").textContent = FILE_MODE
+          ? "提交后由浏览器直连配置的 AI 接口批改；未配置 Key 时会提示并给出明确标注的演示结果。"
+          : "提交后由服务端调用 DeepSeek 批改；未配置 Key 时会提示并给出明确标注的演示结果。";
+        $("open-settings").hidden = !FILE_MODE;
+      }
+
+      /* 复习/批改按钮的提示文案随运行模式与 Key 状态变化。 */
       function updatePracticeNote() {
         const note = $("practice-note");
-        if (backendState === "offline") {
-          note.textContent = "后端未连接 · 检查答案会用本地演示判定，不调用 AI";
-        } else if (backendState === "nokey") {
-          note.textContent = "后端未配置 Key · 检查答案会用本地演示判定，不调用 AI";
-        } else {
-          note.textContent = "提交后由服务端调用 DeepSeek 批改（/api/grade）";
+        if (!note) { return; }
+        if (FILE_MODE) {
+          note.textContent = activeConfig().apiKey
+            ? "当前提供方：" + providerLabel() + "；默写由浏览器本地判断，不调用 AI，翻译整轮完成后一次性提交批改"
+            : "未配置" + providerLabel() + " API Key：默写仍可本地判断，翻译批改不可用；不会自动改用其他提供方";
+          return;
         }
+        if (backendState === "offline") {
+          note.textContent = "后端未连接 · 默写使用浏览器本地判断，不调用 AI";
+        } else if (backendState === "nokey") {
+          note.textContent = "后端未配置 Key · 默写使用浏览器本地判断，翻译批改不可用";
+        } else {
+          note.textContent = "默写由浏览器本地判断；翻译整轮完成后一次性提交服务端批改";
+        }
+      }
+
+      /* ===== API 设置弹窗（file:// 直连模式）===== */
+      function selectedProviderFromForm() {
+        return $("provider-relay").checked ? "relay" : "official";
+      }
+
+      function updateProviderPanels() {
+        const provider = selectedProviderFromForm();
+        $("official-settings").hidden = provider !== "official";
+        $("relay-settings").hidden = provider !== "relay";
+      }
+
+      /* 两个提供方的配置同时填充，Key 各用各的输入框，不互相复制。 */
+      function fillSettingsForm() {
+        const provider = currentProvider();
+        $("provider-official").checked = provider === "official";
+        $("provider-relay").checked = provider === "relay";
+        $("official-baseurl").value = OFFICIAL_BASE_URL;
+        $("official-apikey").value = apiSettings.official.apiKey;
+        $("official-chatmodel").value = apiSettings.official.chatModel;
+        $("official-visionmodel").value = apiSettings.official.visionModel;
+        $("settings-baseurl").value = apiSettings.relay.baseUrl;
+        $("settings-channel").value = apiSettings.relay.channel;
+        $("settings-relaykey").value = apiSettings.relay.apiKey;
+        $("settings-chatmodel").value = apiSettings.relay.chatModel;
+        $("settings-visionmodel").value = apiSettings.relay.visionModel;
+        updateProviderPanels();
+      }
+
+      function openSettings() {
+        if (!FILE_MODE) { return; }
+        fillSettingsForm();
+        setStatus("settings-status", "info", "Key 的保存位置",
+          "官方与中转站的 Key 分别保存在当前浏览器的 localStorage；不会写入 HTML、仓库文件或 URL，但页面脚本和开发者工具可以读取。请勿在公用电脑上保存。");
+        const modal = $("settings-modal");
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+        $("close-settings").focus();
+      }
+
+      function closeSettings() {
+        const modal = $("settings-modal");
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+        // 关闭后不把 Key 留在 DOM 里，下次打开由 fillSettingsForm 重新填充。
+        $("official-apikey").value = "";
+        $("settings-relaykey").value = "";
+        $("open-settings").focus();
+      }
+
+      function isHttpUrl(value) {
+        try {
+          const url = new URL(value);
+          return (url.protocol === "http:" || url.protocol === "https:") && Boolean(url.hostname);
+        } catch (error) {
+          return false;
+        }
+      }
+
+      function saveSettingsFromForm() {
+        const provider = selectedProviderFromForm();
+        const typedRelayUrl = normalizeApiBaseUrl($("settings-baseurl").value);
+        // 只校验当前选中的提供方；未选中那一侧的配置不阻挡保存。
+        let relayBaseUrl = apiSettings.relay.baseUrl;
+        if (provider === "relay") {
+          if (!typedRelayUrl) {
+            setStatus("settings-status", "warn", "无法保存", "中转站 Base URL 不能为空。");
+            return;
+          }
+          if (!isHttpUrl(typedRelayUrl)) {
+            setStatus("settings-status", "warn", "无法保存", "中转站 Base URL 必须以 http:// 或 https:// 开头。");
+            return;
+          }
+          relayBaseUrl = typedRelayUrl;
+        } else if (typedRelayUrl === "") {
+          // 官方模式允许清空中转站 Base URL，并原样保存为空（不回填米醋示例）。
+          relayBaseUrl = "";
+        } else if (isHttpUrl(typedRelayUrl)) {
+          // 官方模式下保留用户已填的有效中转站地址，避免切换时丢失；无效值不写入。
+          relayBaseUrl = typedRelayUrl;
+        }
+        const next = {
+          provider: provider,
+          official: {
+            apiKey: $("official-apikey").value.trim(),
+            chatModel: $("official-chatmodel").value.trim() || SETTINGS_DEFAULTS.official.chatModel,
+            visionModel: $("official-visionmodel").value.trim()
+          },
+          relay: {
+            baseUrl: relayBaseUrl,
+            channel: $("settings-channel").value.trim(),
+            apiKey: $("settings-relaykey").value.trim(),
+            chatModel: $("settings-chatmodel").value.trim() || SETTINGS_DEFAULTS.relay.chatModel,
+            visionModel: $("settings-visionmodel").value.trim() || SETTINGS_DEFAULTS.relay.visionModel
+          }
+        };
+        $("settings-baseurl").value = relayBaseUrl;
+        try {
+          window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(next));
+          window.localStorage.removeItem(LEGACY_SETTINGS_KEY);
+        } catch (error) {
+          setStatus("settings-status", "warn", "保存失败", "浏览器禁止 localStorage，无法保存 Key。");
+          return;
+        }
+        const previousProvider = currentProvider();
+        apiSettings = next;
+        // 切换提供方后重新检查 Key 状态与文案。
+        if (previousProvider !== provider) { backendState = "unknown"; }
+        refreshApiBadge();
+        const config = activeConfig();
+        setStatus("settings-status", "ok", "已保存",
+          config.apiKey
+            ? "当前提供方：" + providerLabel(provider) + "；后续请求只使用该提供方的 Key 与模型。"
+            : "已保存" + providerLabel(provider) + "的配置，但该提供方尚未填写 Key，相关 AI 功能不可用。");
+      }
+
+      function clearSettingsFromForm() {
+        try {
+          window.localStorage.removeItem(SETTINGS_KEY);
+          window.localStorage.removeItem(LEGACY_SETTINGS_KEY);
+        } catch (error) { /* 忽略清理失败 */ }
+        apiSettings = {
+          provider: SETTINGS_DEFAULTS.provider,
+          official: Object.assign({}, SETTINGS_DEFAULTS.official),
+          relay: Object.assign({}, SETTINGS_DEFAULTS.relay)
+        };
+        fillSettingsForm();
+        $("official-apikey").value = "";
+        $("settings-relaykey").value = "";
+        refreshApiBadge();
+        setStatus("settings-status", "warn", "已清除", "官方与中转站的 Key 均已从 localStorage 移除，页面回到默认的官方 DeepSeek 配置。");
       }
 
       /* ===== 上传弹窗：本地读取图片为 data URL 并预览。 ===== */
@@ -1929,7 +2957,9 @@
         }
         $("upload-preview-image").src = selectedImage.dataUrl;
         $("upload-preview-name").textContent = selectedImage.name;
-        $("upload-preview-meta").textContent = formatSize(selectedImage.size) + " · 已在本地读取为图片数据，进入后发送给本机代理识别";
+        $("upload-preview-meta").textContent = formatSize(selectedImage.size) + (FILE_MODE
+          ? " · 已在本地读取为图片数据，进入后由浏览器直连 API 识别"
+          : " · 已在本地读取为图片数据，进入后发送给本机代理识别");
         wrap.hidden = false;
       }
 
@@ -1943,8 +2973,12 @@
         $("upload-title").textContent = moduleLabel(module);
         $("upload-eyebrow").textContent = module === "review" ? "WORD REVIEW · UPLOAD" : "HOMEWORK · UPLOAD";
         $("upload-lead").textContent = module === "review"
-          ? "选择一张包含单词或课文的图片；进入后会调用 /api/ocr 识别，再用 /api/words 生成词卡。"
-          : "选择一张作业照片（可含学生作答）；进入后会调用 /api/ocr 识别，再用 /api/grade 批改。";
+          ? (FILE_MODE
+              ? "选择一张包含单词或课文的图片；进入后由浏览器直连 API 识别，再生成词卡。"
+              : "选择一张包含单词或课文的图片；进入后会调用 /api/ocr 识别，再用 /api/words 生成词卡。")
+          : (FILE_MODE
+              ? "选择一张作业照片（可含学生作答）；进入后由浏览器直连 API 识别，再提交批改。"
+              : "选择一张作业照片（可含学生作答）；进入后会调用 /api/ocr 识别，再用 /api/grade 批改。");
         $("upload-feedback").className = "upload-feedback";
         $("upload-feedback").textContent = "尚未选择图片。也可以直接进入查看预置演示内容。";
         $("continue-upload").textContent = "直接进入" + moduleLabel(module);
@@ -1999,26 +3033,46 @@
 
       /* ===== 复习单打印：只生成页面预览，不生成 Word 文件。 ===== */
       function renderPrintSheet() {
-        const box = $("print-words");
-        /* 翻译练习题跟随当前词表（明日重点优先，其次当前词表），不再硬编码「环境」。 */
-        const focusWord = tomorrowWords.length ? tomorrowWords[0] : (wordList.length ? wordList[0].word : "");
-        const focusItem = focusWord ? findWord(focusWord) : null;
-        const translate = $("print-translate");
-        if (translate) {
-          translate.textContent = focusItem && focusItem.meaning
-            ? "2. 把“" + focusItem.meaning + "”翻译成英文：____________________"
-            : "2. 把其中一个重点词翻译成英文：____________________";
-        }
-        if (tomorrowWords.length === 0) {
-          box.innerHTML = '<p class="print-empty">暂无明日重点词，可先在左侧用 ☆ 标记。</p>';
+        const list = wordList.filter(function (item) { return item && item.word; });
+        const wordsBox = $("print-words");
+        const translateBox = $("print-translate");
+        const answersBox = $("print-answers");
+        const masking = isRoundInProgress();
+        $("print-sheet-title").textContent = wordSource === "ocr"
+          ? "English · 单词复习单"
+          : "English · 单词复习单（演示）";
+
+        if (list.length === 0) {
+          wordsBox.innerHTML = '<p class="print-empty">暂无单词，请先识别图片或使用演示词表。</p>';
+          translateBox.innerHTML = "";
+          answersBox.innerHTML = "";
           return;
         }
-        box.innerHTML = tomorrowWords.map(function (word, index) {
-          const item = findWord(word);
+        if (masking) {
+          wordsBox.innerHTML = '<p class="print-empty">完成当前一轮后显示词表与练习。</p>';
+          translateBox.innerHTML = '<p class="print-empty">完成当前一轮后显示翻译练习。</p>';
+          answersBox.innerHTML = '<p class="print-empty">答案页将在本轮完成后生成。</p>';
+          return;
+        }
+
+        const pad = function (index) { return String(index + 1).padStart(2, "0"); };
+        wordsBox.innerHTML = list.map(function (item, index) {
           return '<div class="print-line">' +
-            '<span class="print-num">' + String(index + 1).padStart(2, "0") + "</span>" +
-            '<span class="print-word">' + word + "<small>" + (item ? item.meaning : "") + "</small></span>" +
-            '<span class="print-blank">默写：________________</span>' +
+            '<span class="print-num">' + pad(index) + "</span>" +
+            '<span class="print-word">' + escapeHtml(item.word) + "<small>" + escapeHtml(item.meaning || "释义待补充") + "</small></span>" +
+          "</div>";
+        }).join("");
+        translateBox.innerHTML = list.map(function (item, index) {
+          return '<div class="print-line">' +
+            '<span class="print-num">' + pad(index) + "</span>" +
+            '<span class="print-word">把“' + escapeHtml(item.meaning || "释义待补充") + "”翻译成英文：</span>" +
+            '<span class="print-blank">________________</span>' +
+          "</div>";
+        }).join("");
+        answersBox.innerHTML = list.map(function (item, index) {
+          return '<div class="print-line">' +
+            '<span class="print-num">' + pad(index) + "</span>" +
+            '<span class="print-word">' + escapeHtml(item.word) + "<small>" + escapeHtml(item.meaning || "") + "</small></span>" +
           "</div>";
         }).join("");
       }
@@ -2044,7 +3098,7 @@
         printFocus = null;
       }
 
-      /* ===== 单词复习：默写、造句、翻译、错词与明日重点。 ===== */
+      /* ===== 单词复习：默写、翻译练习、错词与明日重点。 ===== */
       function setFeedback(message, tone) {
         const box = $("practice-feedback");
         box.textContent = message || "";
@@ -2113,7 +3167,7 @@
         errorWords = errorWords.filter(function (item) { return !isDemoResidue(item.word); });
       }
 
-      /* 用真实结果或演示数据替换词卡。 */
+      /* 用真实结果或演示数据替换词卡；更换词表时清空当前批次答案与结果。 */
       function applyWordList(cards, source) {
         const list = (Array.isArray(cards) ? cards : []).map(function (item) {
           return {
@@ -2134,124 +3188,374 @@
         if (source === "ocr" && list.length > 0) {
           pruneDemoResidue(list);
         }
-        activeWord = 0;
         updateReviewBadge();
-        renderWordPills();
-        renderWord();
+        resetRounds();
+        renderRound();
         renderErrors();
       }
 
-      function renderWordPills() {
-        const pills = $("word-pills");
-        pills.innerHTML = wordList.map(function (item, index) {
-          const activeClass = index === activeWord ? " active" : "";
-          return '<button class="word-pill' + activeClass + '" type="button" data-word-index="' + index + '">' + escapeHtml(item.word) + "</button>";
-        }).join("");
-        pills.querySelectorAll("[data-word-index]").forEach(function (button) {
-          button.addEventListener("click", function () {
-            activeWord = Number(button.dataset.wordIndex);
-            renderWord();
-            renderWordPills();
-          });
+      /* ===== 分批提交：一轮练习 = 当前词表的全部单词 =====
+         默写：本地判断拼写，整轮结束后才展示结果；
+         翻译：整轮答案收集完再一次性提交，失败保留答案并可重试。 */
+      function createRound(mode) {
+        return {
+          mode: mode,
+          order: wordList.map(function (_, index) { return index; }),
+          cursor: 0,
+          answers: {},
+          status: "active",
+          results: null,
+          error: ""
+        };
+      }
+
+      function resetRounds() {
+        rounds = { dictation: null, translation: null };
+        activeMode = "dictation";
+        updateReviewTabs();
+      }
+
+      function ensureRound() {
+        if (wordList.length === 0) { return null; }
+        if (!rounds.dictation) { rounds.dictation = createRound("dictation"); }
+        if (activeMode === "translation") {
+          if (!rounds.dictation || rounds.dictation.status !== "done") {
+            activeMode = "dictation";
+          } else if (!rounds.translation) {
+            rounds.translation = createRound("translation");
+          }
+        }
+        return rounds[activeMode];
+      }
+
+      function updateReviewTabs() {
+        const dictationDone = Boolean(rounds.dictation && rounds.dictation.status === "done");
+        document.querySelectorAll(".review-tab").forEach(function (tab) {
+          const mode = tab.dataset.mode;
+          const selected = mode === activeMode;
+          tab.classList.toggle("active", selected);
+          tab.setAttribute("aria-selected", String(selected));
+          const locked = mode === "translation" && !dictationDone;
+          tab.classList.toggle("disabled", locked);
+          tab.setAttribute("aria-disabled", String(locked));
         });
       }
 
+      function isRoundInProgress() {
+        const round = rounds[activeMode];
+        return Boolean(round && round.status !== "done");
+      }
+
       function updateMarkButton() {
-        const item = wordList[activeWord];
-        if (!item) { return; }
-        const word = item.word;
-        const marked = tomorrowWords.indexOf(word) !== -1;
+        const round = rounds[activeMode];
+        const item = round ? wordList[round.order[round.cursor]] : null;
         const button = $("mark-word");
+        if (!item) {
+          button.disabled = true;
+          return;
+        }
+        button.disabled = false;
+        const marked = tomorrowWords.indexOf(item.word) !== -1;
         button.textContent = marked ? "★" : "☆";
         button.classList.toggle("marked", marked);
         button.title = marked ? "从明日重点移除" : "加入明日重点";
-        button.setAttribute("aria-label", marked ? "从明日重点移除 " + word : "把 " + word + " 加入明日重点");
+        button.setAttribute("aria-label", marked ? "从明日重点移除" : "加入明日重点");
       }
 
-      function renderWord() {
-        const item = wordList[activeWord];
+      /* 渲染当前题：未完成前不把英文单词、音标或提示写入 DOM。 */
+      function renderRound() {
+        const round = ensureRound();
+        if (!round) { return; }
+        const item = wordList[round.order[round.cursor]];
         if (!item) { return; }
-        const shouldMask = activeMode === "dictation" || activeMode === "translation";
-        $("word-index").textContent = String(activeWord + 1).padStart(2, "0");
-        $("word-count").textContent = "第 " + (activeWord + 1) + " / " + wordList.length + " 个";
-        $("word-text").textContent = item.word;
-        $("word-text").classList.toggle("masked", shouldMask);
-        /* 漏词时 phonetic/meaning/hint 可能为空，这里给出明确占位而不是留白。 */
-        $("word-phonetic").textContent = wordField(item.phonetic, "音标待补充");
-        $("word-meaning").textContent = wordField(item.meaning, "释义待补充");
-        $("reveal-word").hidden = !shouldMask;
-        $("reveal-word").textContent = "点击显示单词";
+        const index = round.order[round.cursor];
+        const done = round.status === "done";
+        const locked = round.status !== "active";
+        const answeredCount = Object.keys(round.answers).length;
 
-        const prompts = {
-          dictation: {
-            prompt: "根据中文释义和提示，写出英文单词：",
-            hint: "提示：" + wordField(item.hint, "暂无提示，可结合释义回忆"),
-            placeholder: "输入英文单词"
-          },
-          sentence: {
-            prompt: "用 “" + item.word + "” 造一个完整句子：",
-            hint: "词义：" + wordField(item.meaning, "待补充") + " · " + wordField(item.hint, "暂无提示"),
-            placeholder: "写一个包含该单词的句子"
-          },
-          translation: {
-            prompt: "翻译成英文：" + wordField(item.meaning, item.word),
-            hint: "提示：" + wordField(item.hint, "暂无提示") + "（目标词：" + item.word + "）",
-            placeholder: "输入英文单词"
-          }
-        };
-        $("practice-prompt").textContent = prompts[activeMode].prompt;
-        $("word-hint").textContent = prompts[activeMode].hint;
-        $("practice-answer").placeholder = prompts[activeMode].placeholder;
-        $("practice-answer").value = "";
+        $("word-index").textContent = String(round.cursor + 1).padStart(2, "0");
+        $("word-count").textContent = "第 " + (round.cursor + 1) + " / " + round.order.length + " 个";
+        $("word-meaning").textContent = wordField(item.meaning, "释义待补充");
+        $("review-progress").textContent = "第 " + (round.cursor + 1) + " / " + round.order.length + " 题";
+        $("round-state").textContent = done
+          ? "本轮已完成"
+          : (round.status === "grading" ? "正在整批批改" : "已答 " + answeredCount + " / " + round.order.length);
+
+        if (done) {
+          $("word-text").textContent = item.word;
+          $("word-text").classList.remove("masked");
+          $("word-phonetic").textContent = wordField(item.phonetic, "音标待补充");
+          $("word-hint").textContent = "提示：" + wordField(item.hint, "暂无提示");
+        } else {
+          $("word-text").textContent = "••••••";
+          $("word-text").classList.add("masked");
+          $("word-phonetic").textContent = "提交本轮后显示音标";
+          $("word-hint").textContent = "提交本轮后显示提示";
+        }
+
+        if (round.mode === "dictation") {
+          $("practice-prompt").textContent = "根据中文释义，写出英文单词：";
+          $("practice-answer").placeholder = "输入英文单词";
+        } else {
+          $("practice-prompt").textContent = "把“" + wordField(item.meaning, "释义待补充") + "”翻译成英文：";
+          $("practice-answer").placeholder = "输入英文翻译";
+        }
+
+        const saved = round.answers[index];
+        $("practice-answer").value = saved ? saved.answer : "";
+        $("practice-answer").disabled = locked;
+        $("check-answer").disabled = locked;
+
+        const remaining = round.order.length - answeredCount;
+        if (round.status === "grading") {
+          $("check-answer").textContent = "正在批改…";
+        } else if (remaining <= 1) {
+          $("check-answer").textContent = round.mode === "dictation" ? "提交并查看结果" : "提交并批改整轮";
+        } else {
+          $("check-answer").textContent = "提交本题";
+        }
+
+        if (done) {
+          $("prev-word").disabled = round.cursor === 0;
+          $("next-word").disabled = round.cursor >= round.order.length - 1;
+        } else {
+          $("prev-word").disabled = round.cursor === 0 || round.status !== "active";
+          $("next-word").disabled = round.status !== "active" || round.cursor >= round.order.length - 1 || !saved;
+        }
+
         setFeedback("", "");
         updatePracticeNote();
         updateMarkButton();
+        renderRoundResults();
+        updateReviewTabs();
+        renderPrintSheet();
       }
 
       function moveWord(step) {
-        if (wordList.length === 0) { return; }
-        activeWord = (activeWord + step + wordList.length) % wordList.length;
-        renderWord();
-        renderWordPills();
+        const round = rounds[activeMode];
+        if (!round) { return; }
+        if (round.status !== "done" && round.status !== "active") { return; }
+        const target = round.cursor + step;
+        if (target < 0 || target >= round.order.length) { return; }
+        if (step > 0 && !round.answers[round.order[round.cursor]]) { return; }
+        round.cursor = target;
+        renderRound();
+      }
+
+      function findNextUnanswered(round, fromPosition) {
+        for (let offset = 1; offset <= round.order.length; offset += 1) {
+          const position = (fromPosition + offset) % round.order.length;
+          if (!round.answers[round.order[position]]) { return position; }
+        }
+        return -1;
+      }
+
+      function normalizeAnswer(value) {
+        return String(value == null ? "" : value).trim().toLowerCase().replace(/\s+/g, " ");
+      }
+
+      function htmlLines(text) {
+        return escapeHtml(text || "").replace(/\n/g, "<br>");
+      }
+
+      function renderRoundResults() {
+        const box = $("round-results");
+        const round = rounds[activeMode];
+        if (!round) {
+          box.hidden = true;
+          box.innerHTML = "";
+          return;
+        }
+        if (round.status === "active") {
+          box.hidden = true;
+          box.innerHTML = "";
+          return;
+        }
+        if (round.status === "grading") {
+          box.hidden = false;
+          box.innerHTML = '<h4>正在整批批改…</h4><p class="result-note">已把本轮 ' +
+            round.order.length + " 题答案一次性提交，请稍候。</p>";
+          return;
+        }
+        if (round.status === "error") {
+          box.hidden = false;
+          box.innerHTML = "<h4>整批批改失败</h4>" +
+            '<p class="result-note">答案已保留，输入未被清空。' + escapeHtml(round.error || "请稍后重试。") + "</p>" +
+            '<div class="round-result-actions">' +
+              '<button class="primary-button" type="button" id="retry-batch">重试批改</button>' +
+              '<button class="outline-button" type="button" id="edit-batch">返回修改答案</button>' +
+            "</div>";
+          $("retry-batch").addEventListener("click", function () { finishRound(round); });
+          $("edit-batch").addEventListener("click", function () {
+            round.status = "active";
+            round.cursor = 0;
+            renderRound();
+          });
+          return;
+        }
+
+        const items = round.order.map(function (index, position) {
+          const item = wordList[index];
+          const answer = round.answers[index];
+          const answerText = answer ? answer.answer : "（未作答）";
+          if (round.mode === "dictation") {
+            const correct = Boolean(answer && answer.correct);
+            return '<div class="round-result-item ' + (correct ? "ok" : "wrong") + '">' +
+              '<div class="round-result-title"><span>第 ' + (position + 1) + " 题 · " + escapeHtml(item.word) + "</span>" +
+                '<span class="round-result-tag' + (correct ? "" : " warn") + '">本地检查 · ' + (correct ? "正确" : "错误") + "</span></div>" +
+              '<div class="round-result-line">你的答案：<b>' + escapeHtml(answerText) + "</b></div>" +
+              '<div class="round-result-line">正确拼写：<b>' + escapeHtml(item.word) + "</b></div>" +
+            "</div>";
+          }
+          const result = round.results ? round.results.find(function (entry) { return entry.id === String(index); }) : null;
+          const wrong = result && result.correct === false;
+          const tag = result && result.correct === true ? "AI 批改 · 正确" : (wrong ? "AI 批改 · 需改进" : "AI 批改 · 待确认");
+          const feedback = result
+            ? [result.summary, result.correction].filter(Boolean).join(" ")
+            : "";
+          return '<div class="round-result-item ' + (wrong ? "wrong" : "ok") + '">' +
+            '<div class="round-result-title"><span>第 ' + (position + 1) + " 题 · " + escapeHtml(item.word) + "</span>" +
+              '<span class="round-result-tag' + (wrong ? " warn" : "") + '">' + tag + "</span></div>" +
+            '<div class="round-result-line">题目：' + escapeHtml(wordField(item.meaning, "释义待补充")) + "</div>" +
+            '<div class="round-result-line">你的翻译：<b>' + escapeHtml(answerText) + "</b></div>" +
+            '<div class="round-result-line">目标英文：<b>' + escapeHtml(item.word) + "</b></div>" +
+            (feedback ? '<div class="round-result-line">批改：' + htmlLines(feedback) + "</div>" : "") +
+            (result && result.suggestion ? '<div class="round-result-line">建议：' + htmlLines(result.suggestion) + "</div>" : "") +
+          "</div>";
+        }).join("");
+
+        box.hidden = false;
+        box.innerHTML = "<h4>" + (round.mode === "dictation" ? "本轮默写完成 · 本地检查" : "本轮翻译完成 · AI 整批批改") + "</h4>" +
+          '<p class="result-note">' + (round.mode === "dictation"
+            ? "拼写判定在浏览器本地完成，未调用 AI；正确拼写已在上方逐题列出。"
+            : "本轮 " + round.order.length + " 题答案已一次性提交批改（1 次请求）。") + "</p>" +
+          '<div class="round-result-list">' + items + "</div>" +
+          '<div class="round-result-actions"><button class="outline-button" type="button" id="restart-round">重新开始本轮</button></div>';
+        $("restart-round").addEventListener("click", function () {
+          rounds[activeMode] = createRound(activeMode);
+          renderRound();
+        });
+      }
+
+      async function finishRound(round) {
+        if (!round) { return; }
+        if (round.mode === "dictation") {
+          round.status = "done";
+          round.order.forEach(function (index) {
+            const answer = round.answers[index];
+            if (answer && !answer.correct) { recordMistake(wordList[index].word); }
+          });
+          renderRound();
+          return;
+        }
+
+        round.status = "grading";
+        round.error = "";
+        renderRound();
+        const items = round.order.map(function (index) {
+          const item = wordList[index];
+          return {
+            id: String(index),
+            question: wordField(item.meaning, "释义待补充"),
+            answer: round.answers[index] ? round.answers[index].answer : ""
+          };
+        });
+        try {
+          const payload = await postJson("/grade-batch", { items: items, kind: "translation" });
+          const results = payload && Array.isArray(payload.results) ? payload.results : null;
+          if (!results || results.length !== items.length) {
+            throw new ApiError(502, "BAD_BATCH", "批量批改返回的题目数量与提交不一致，请重试。");
+          }
+          const byId = new Map();
+          results.forEach(function (entry) {
+            if (entry && entry.id !== undefined && entry.id !== null) { byId.set(String(entry.id), entry); }
+          });
+          round.results = items.map(function (input) {
+            const hit = byId.get(input.id);
+            if (!hit) {
+              throw new ApiError(502, "BAD_BATCH", "批量批改缺少第 " + input.id + " 题的结果，请重试。");
+            }
+            return {
+              id: input.id,
+              correct: hit.correct === true ? true : (hit.correct === false ? false : null),
+              summary: hit.summary || "",
+              correction: hit.correction || "",
+              suggestion: hit.suggestion || ""
+            };
+          });
+          round.status = "done";
+          round.results.forEach(function (entry) {
+            if (entry.correct === false) { recordMistake(wordList[Number(entry.id)].word); }
+          });
+          if (backendState === "unknown") { backendState = "ready"; }
+        } catch (error) {
+          round.status = "error";
+          round.error = describeApiError(error);
+          if (error instanceof ApiError) {
+            if (error.status === 503) { backendState = "nokey"; }
+            if (error.status === 0) { backendState = "offline"; }
+            updatePracticeNote();
+          }
+        }
+        renderRound();
       }
 
       function renderErrors() {
         const box = $("error-words");
+        const masking = isRoundInProgress();
         if (errorWords.length === 0) {
           box.innerHTML = '<p class="empty-note">还没有错词记录。</p>';
         } else {
           box.innerHTML = errorWords.map(function (item) {
+            if (masking) {
+              return '<div class="error-row masked-row">' +
+                '<span class="error-word">••••••<small>完成本轮后显示</small></span>' +
+                '<span class="error-count">错 ' + item.count + " 次</span>" +
+              "</div>";
+            }
             return '<button class="error-row" type="button" data-error-word="' + escapeHtml(item.word) + '">' +
               '<span class="error-word">' + escapeHtml(item.word) + "<small>" + escapeHtml(item.meaning || "") + "</small></span>" +
               '<span class="error-count">错 ' + item.count + " 次</span>" +
               '<span class="error-go">去复习</span>' +
             "</button>";
           }).join("");
-          box.querySelectorAll("[data-error-word]").forEach(function (button) {
-            button.addEventListener("click", function () {
-              const index = wordList.findIndex(function (item) { return item.word === button.dataset.errorWord; });
-              if (index === -1) {
-                showToast(button.dataset.errorWord + " 不在当前词表中，可先更换图片识别");
-                return;
-              }
-              activeWord = index;
-              renderWord();
-              renderWordPills();
-              showToast("正在复习 " + button.dataset.errorWord);
+          if (!masking) {
+            box.querySelectorAll("[data-error-word]").forEach(function (button) {
+              button.addEventListener("click", function () {
+                const index = wordList.findIndex(function (item) { return item.word === button.dataset.errorWord; });
+                if (index === -1) {
+                  showToast(button.dataset.errorWord + " 不在当前词表中，可先更换图片识别");
+                  return;
+                }
+                const round = rounds[activeMode];
+                const position = round ? round.order.indexOf(index) : -1;
+                if (position === -1) {
+                  showToast("该词不在本轮练习中，请先更换词表");
+                  return;
+                }
+                round.cursor = position;
+                renderRound();
+                showToast("正在查看 " + button.dataset.errorWord + " 的本轮结果");
+              });
             });
-          });
+          }
         }
         renderTomorrow();
       }
 
       function renderTomorrow() {
         const list = $("tomorrow-list");
+        const masking = isRoundInProgress();
         if (tomorrowWords.length === 0) {
           list.innerHTML = '<span class="tomorrow-empty">点单词卡上的 ☆ 加入重点词。</span>';
+        } else if (masking) {
+          list.innerHTML = tomorrowWords.map(function () {
+            return '<span class="word-chip masked-chip">••••••</span>';
+          }).join("") + '<span class="tomorrow-empty">完成本轮后显示</span>';
         } else {
           list.innerHTML = tomorrowWords.map(function (word) {
             return '<span class="word-chip">' + escapeHtml(word) +
-              '<button type="button" data-remove-word="' + escapeHtml(word) + '" aria-label="从明日重点移除 ' + escapeHtml(word) + '">×</button></span>';
+              '<button type="button" data-remove-word="' + escapeHtml(word) + '" aria-label="从明日重点移除">×</button></span>';
           }).join("");
           list.querySelectorAll("[data-remove-word]").forEach(function (button) {
             button.addEventListener("click", function () {
@@ -2281,76 +3585,47 @@
         updateMarkButton();
       }
 
-      /* AI 不可用时的本地演示判定（明确标注为演示，不冒充 AI 结果）。 */
-      function localCheck(raw, item, mode) {
-        if (mode === "sentence") {
-          const hasWord = new RegExp("\\b" + escapeRegExp(item.word) + "\\b", "i").test(raw);
-          const wordCount = raw.split(/\s+/).filter(Boolean).length;
-          if (!hasWord) {
-            return { wrong: true, text: "句子里还没有出现 “" + item.word + "”。" };
-          }
-          if (wordCount < 3) {
-            return { wrong: true, text: "再补成完整句子。" };
-          }
-          return { wrong: false, text: "本地演示判定：句子里用到了目标词（未做语法批改）。" };
-        }
-        const normalized = raw.toLowerCase().replace(/[^a-z'-]/g, "");
-        if (normalized === item.word.toLowerCase()) {
-          return { wrong: false, text: "本地演示判定：拼写与目标词一致：" + item.word + "。" };
-        }
-        return { wrong: true, text: "本地演示判定：与目标词 “" + item.word + "” 不一致，已加入明日重点。" };
-      }
-
-      /* 答案检查走 /api/grade；AI 不可用时回退本地演示判定并明确标注。 */
+      /* 提交当前题：只记录答案并前进；整轮结束前不显示正确与否。 */
       async function checkAnswer() {
         if (reviewBusy) { return; }
+        const round = rounds[activeMode];
+        if (!round || round.status !== "active") { return; }
         const input = $("practice-answer");
         const raw = input.value.trim();
-        const item = wordList[activeWord];
         if (!raw) {
-          setFeedback("先写下答案，再检查。", "warn");
+          setFeedback("先写下答案，再提交。", "warn");
           input.focus();
           return;
         }
+        const position = round.cursor;
+        const index = round.order[position];
+        const item = wordList[index];
         if (!item) { return; }
 
-        const kind = activeMode === "sentence" ? "sentences" : "words";
-        const contexts = {
-          dictation: "默写题：请判断作答是否为单词 “" + item.word + "” 的正确拼写（释义：" + wordField(item.meaning, "待补充") + "）。",
-          sentence: "造句题：要求用单词 “" + item.word + "”（" + wordField(item.meaning, "待补充") + "）造一个语法正确的完整句子。",
-          translation: "翻译题：请把作答与目标英文 “" + item.word + "”（中文释义：" + wordField(item.meaning, "待补充") + "）对照，判断是否翻译正确。"
-        };
-
-        reviewBusy = true;
-        $("check-answer").disabled = true;
-        setFeedback("正在提交给服务端批改（/api/grade）…", "");
-        try {
-          const result = await postJson("/grade", { text: raw, kind: kind, context: contexts[activeMode] });
-          renderResultInto($("practice-feedback"), result, {
-            baseClass: "feedback",
-            tone: "ok",
-            title: "AI 批改结果（" + kindLabel(kind) + "）"
-          });
-          backendState = backendState === "unknown" ? "ready" : backendState;
-        } catch (error) {
-          const demo = localCheck(raw, item, activeMode);
-          renderResultInto($("practice-feedback"), { summary: "", correction: demo.text, suggestion: "" }, {
-            baseClass: "feedback",
-            tone: demo.wrong ? "warn" : "ok",
-            title: "演示判定 · 未调用 AI",
-            note: "AI 批改不可用：" + describeApiError(error)
-          });
-          if (demo.wrong) { recordMistake(item.word); }
-          if (error instanceof ApiError) {
-            if (error.status === 503) { backendState = "nokey"; }
-            if (error.status === 0) { backendState = "offline"; }
-            updatePracticeNote();
-          }
-        } finally {
-          reviewBusy = false;
-          $("check-answer").disabled = false;
+        if (round.mode === "dictation") {
+          round.answers[index] = {
+            answer: raw,
+            correct: normalizeAnswer(raw) === normalizeAnswer(item.word)
+          };
+        } else {
+          round.answers[index] = { answer: raw };
         }
-        input.value = "";
+
+        const next = findNextUnanswered(round, position);
+        if (next === -1) {
+          reviewBusy = true;
+          try {
+            await finishRound(round);
+          } finally {
+            reviewBusy = false;
+          }
+          return;
+        }
+
+        round.cursor = next;
+        renderRound();
+        setFeedback("已记录第 " + (position + 1) + " 题，答案已保存。", "");
+        $("practice-answer").focus();
       }
 
       /* ===== 作业批改：预置示例（演示）与 /api/grade 真实结果。 ===== */
@@ -2514,7 +3789,9 @@
       /* 图片识别 → /api/ocr（复习：继续生成词卡）。 */
       async function runReviewImage(image) {
         setReviewBusy(true);
-        setStatus("review-status", "loading", "正在识别图片…", "已把图片发送给本机代理 /api/ocr（purpose=review）。");
+        setStatus("review-status", "loading", "正在识别图片…", FILE_MODE
+          ? "已把图片发送给" + providerLabel() + "（视觉模型：" + (activeConfig().visionModel || "未配置") + "）。"
+          : "已把图片发送给本机代理 /api/ocr（purpose=review）。");
         try {
           const ocr = await postJson("/ocr", { image: image.dataUrl, purpose: "review" });
           const text = typeof ocr.text === "string" ? ocr.text : "";
@@ -2545,12 +3822,15 @@
           markFileStatus("已识别 " + wordList.length + " 个单词（AI）", false);
           showToast("词卡已按图片识别结果更新");
         } catch (error) {
+          // 不切换提供方、不静默降级：保留原图片（selectedImage 未清空），展示实际错误供重试或改配置。
           applyWordList([], "ocr");
           noteBackendFailure(error);
-          setStatus("review-status", "warn", "识别失败 · 已回退演示词表",
-            describeApiError(error),
+          const provider = FILE_MODE ? providerLabel() : "本机代理";
+          setStatus("review-status", "warn", "识别失败 · 图片已保留",
+            provider + " 返回的错误：" + describeApiError(error) +
+            (FILE_MODE ? " 图片已保留，可重试，或到「API 设置」切换提供方/模型；不会自动改用其他提供方。" : ""),
             { label: "重试识别", onClick: function () { runReviewImage(image); } });
-          markFileStatus("识别失败 · 已回退演示", true);
+          markFileStatus("识别失败 · 图片已保留", true);
         } finally {
           setReviewBusy(false);
         }
@@ -2559,7 +3839,9 @@
       /* 图片识别 → /api/ocr，再 /api/grade 批改。 */
       async function runGradeImage(image) {
         setGradeBusy(true);
-        setStatus("grade-status", "loading", "正在识别图片…", "已把图片发送给本机代理 /api/ocr（purpose=grade）。");
+        setStatus("grade-status", "loading", "正在识别图片…", FILE_MODE
+          ? "已把图片发送给" + providerLabel() + "（视觉模型：" + (activeConfig().visionModel || "未配置") + "）。"
+          : "已把图片发送给本机代理 /api/ocr（purpose=grade）。");
         try {
           const ocr = await postJson("/ocr", { image: image.dataUrl, purpose: "grade" });
           const text = typeof ocr.text === "string" ? ocr.text : "";
@@ -2593,7 +3875,7 @@
             markFileStatus("批改结果为空", true);
             return;
           }
-          setStatus("grade-status", "ok", "批改完成", "结果来自服务端 DeepSeek 调用（真实 AI 批改）。");
+          setStatus("grade-status", "ok", "批改完成", "结果来自配置的 AI 接口（真实 AI 批改）。");
           backendState = "ready";
           markGradeReal(true);
           markFileStatus("已识别并批改（AI）", false);
@@ -2605,10 +3887,12 @@
           renderAssignments();
           markGradeReal(false);
           noteBackendFailure(error);
-          setStatus("grade-status", "warn", "批改失败 · 已回退演示示例",
-            describeApiError(error),
+          const provider = FILE_MODE ? providerLabel() : "本机代理";
+          setStatus("grade-status", "warn", "批改失败 · 图片已保留",
+            provider + " 返回的错误：" + describeApiError(error) +
+            (FILE_MODE ? " 图片已保留，可重试，或到「API 设置」切换提供方/模型；不会自动改用其他提供方。" : ""),
             { label: "重试识别并批改", onClick: function () { runGradeImage(image); } });
-          markFileStatus("批改失败 · 已回退演示", true);
+          markFileStatus("批改失败 · 图片已保留", true);
         } finally {
           setGradeBusy(false);
         }
@@ -2637,7 +3921,7 @@
 
         setGradeBusy(true);
         box.className = "grade-feedback";
-        box.textContent = "正在提交给服务端批改（/api/grade）…";
+        box.textContent = FILE_MODE ? "正在提交给配置的 AI 接口批改…" : "正在提交给服务端批改（/api/grade）…";
         try {
           const payload = { text: raw, kind: activeKind };
           if (context) { payload.context = context; }
@@ -2683,6 +3967,13 @@
       async function exportWordDoc() {
         if (exportBusy) { return; }
         const status = $("export-status");
+        // 本轮未完成时复习单会遮蔽答案，导出的 Word 也会缺答案或泄题，因此先拦截。
+        if (isRoundInProgress()) {
+          status.hidden = false;
+          status.className = "export-status";
+          status.textContent = "先完成当前这一轮，再导出含答案的 Word。";
+          return;
+        }
         const usesRealList = wordSource === "ocr" && wordList.length > 0;
         const source = usesRealList
           ? wordList.map(function (item) { return item.word; })
@@ -2697,44 +3988,51 @@
           const item = findWord(word);
           return !item || !item.meaning;
         }).length;
+        const words = source.map(function (word) {
+          const item = findWord(word);
+          return { word: word, meaning: item && item.meaning ? item.meaning : "" };
+        });
+        const title = (usesRealList ? "英语复习单 · " : "英语复习单（演示） · ") + new Date().toLocaleDateString("zh-CN");
+
         exportBusy = true;
         $("export-word").disabled = true;
         status.hidden = false;
         status.className = "export-status info";
-        status.textContent = "正在请求 /api/word-doc 生成 .docx（" + source.length + " 个单词" +
-          (usesRealList ? "，来自图片识别结果" : "，当前为演示词表") + "）…";
+        status.textContent = FILE_MODE
+          ? "正在浏览器内生成 .docx（" + source.length + " 个单词" + (usesRealList ? "，来自图片识别结果" : "，当前为演示词表") + "）…"
+          : "正在请求 /api/word-doc 生成 .docx（" + source.length + " 个单词" + (usesRealList ? "，来自图片识别结果" : "，当前为演示词表") + "）…";
         try {
-          const words = source.map(function (word) {
-            const item = findWord(word);
-            return { word: word, meaning: item && item.meaning ? item.meaning : "" };
-          });
-          let response;
-          try {
-            response = await fetch(apiPath("/word-doc"), {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                words: words,
-                /* 演示词表导出的文件在标题里带「演示」标识，避免被当作真实识别结果。 */
-                title: (usesRealList ? "英语复习单 · " : "英语复习单（演示） · ") + new Date().toLocaleDateString("zh-CN")
-              })
-            });
-          } catch (error) {
-            throw new ApiError(0, "NETWORK_ERROR", "无法连接本机后端（/api/word-doc）。请先运行 server 目录下的 node server.js。");
-          }
-          if (!response.ok) {
-            let message = "生成失败（HTTP " + response.status + "）";
+          let blob = null;
+          let filename = "";
+          if (FILE_MODE) {
+            const bytes = buildReviewDocx(words, title);
+            blob = new Blob([bytes], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+            filename = title.replace(/[\\/:*?"<>|]/g, "-") + ".docx";
+          } else {
+            let response;
             try {
-              const payload = await response.json();
-              if (payload && payload.error && payload.error.message) { message = payload.error.message; }
-            } catch (error) { /* 非 JSON 错误体，保留默认提示 */ }
-            throw new ApiError(response.status, "WORD_DOC_FAILED", message);
+              response = await fetch(apiPath("/word-doc"), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ words: words, title: title })
+              });
+            } catch (error) {
+              throw new ApiError(0, "NETWORK_ERROR", "无法连接本机后端（/api/word-doc）。请先运行 server 目录下的 node server.js，或直接双击 HTML 使用浏览器内生成。");
+            }
+            if (!response.ok) {
+              let message = "生成失败（HTTP " + response.status + "）";
+              try {
+                const payload = await response.json();
+                if (payload && payload.error && payload.error.message) { message = payload.error.message; }
+              } catch (error) { /* 非 JSON 错误体，保留默认提示 */ }
+              throw new ApiError(response.status, "WORD_DOC_FAILED", message);
+            }
+            blob = await response.blob();
+            filename = filenameFromDisposition(response.headers.get("Content-Disposition")) || "英语复习单.docx";
           }
-          const blob = await response.blob();
           if (!blob || blob.size === 0) {
-            throw new ApiError(502, "EMPTY_FILE", "服务端返回了空文件。");
+            throw new ApiError(502, "EMPTY_FILE", "生成的 Word 文件为空。");
           }
-          const filename = filenameFromDisposition(response.headers.get("Content-Disposition")) || "英语复习单.docx";
           const url = URL.createObjectURL(blob);
           const link = document.createElement("a");
           link.href = url;
@@ -2745,12 +4043,12 @@
           window.setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
           status.className = "export-status ok";
           status.textContent = "已生成并开始下载：" + filename + "（" + formatSize(blob.size) + "）。" +
-            (usesRealList ? "文件由本机后端实时生成，单词来自图片识别结果。" : "文件标题带「演示」标识：当前用的是预置演示词表。") +
+            (usesRealList ? "文档含词表、默写、翻译练习与独立答案页。" : "文件标题带「演示」标识：当前用的是预置演示词表。") +
             (missingMeaning ? " 其中 " + missingMeaning + " 个词没有释义，文档里该列留空。" : "");
           showToast(usesRealList ? "已生成 Word 复习单（真实词表）" : "已生成 Word 复习单（演示词表）");
         } catch (error) {
           status.className = "export-status";
-          status.textContent = "无法生成 Word 复习单：" + describeApiError(error) + "（该接口不需要 Key，请确认后端已启动）";
+          status.textContent = "无法生成 Word 复习单：" + describeApiError(error);
         } finally {
           exportBusy = false;
           $("export-word").disabled = false;
@@ -2831,13 +4129,19 @@
 
       document.querySelectorAll(".review-tab").forEach(function (button) {
         button.addEventListener("click", function () {
-          activeMode = button.dataset.mode;
-          document.querySelectorAll(".review-tab").forEach(function (tab) {
-            const selected = tab === button;
-            tab.classList.toggle("active", selected);
-            tab.setAttribute("aria-selected", String(selected));
-          });
-          renderWord();
+          const mode = button.dataset.mode;
+          if (mode === activeMode) { return; }
+          if (mode === "translation" && (!rounds.dictation || rounds.dictation.status !== "done")) {
+            showToast("先完成默写这一轮，再进行翻译");
+            return;
+          }
+          const current = rounds[activeMode];
+          if (current && current.status === "active" && Object.keys(current.answers).length > 0) {
+            showToast("请先完成当前这一轮，再切换练习方式");
+            return;
+          }
+          activeMode = mode;
+          renderRound();
         });
       });
       document.querySelectorAll(".kind").forEach(function (button) {
@@ -2858,22 +4162,18 @@
 
       $("prev-word").addEventListener("click", function () { moveWord(-1); });
       $("next-word").addEventListener("click", function () { moveWord(1); });
-      $("reveal-word").addEventListener("click", function () {
-        $("word-text").classList.remove("masked");
-        $("reveal-word").hidden = true;
-        const item = wordList[activeWord];
-        setFeedback("已显示答案：" + (item ? item.word : ""), "");
-      });
       $("mark-word").addEventListener("click", function () {
-        const item = wordList[activeWord];
+        const round = rounds[activeMode];
+        const item = round ? wordList[round.order[round.cursor]] : null;
         if (!item) { return; }
         const word = item.word;
+        const masking = isRoundInProgress();
         if (tomorrowWords.indexOf(word) !== -1) {
           tomorrowWords = tomorrowWords.filter(function (w) { return w !== word; });
-          showToast(word + " 已从明日重点移除");
+          showToast(masking ? "已从明日重点移除" : word + " 已从明日重点移除");
         } else {
           tomorrowWords = tomorrowWords.concat(word);
-          showToast(word + " 已加入明日重点");
+          showToast(masking ? "已加入明日重点（完成本轮后显示）" : word + " 已加入明日重点");
         }
         renderTomorrow();
         updateMarkButton();
@@ -2894,7 +4194,13 @@
 
       $("export-word").addEventListener("click", exportWordDoc);
 
-      $("open-print").addEventListener("click", openPrint);
+      $("open-print").addEventListener("click", function () {
+        if (isRoundInProgress()) {
+          showToast("先完成当前这一轮，再查看含答案的复习单");
+          return;
+        }
+        openPrint();
+      });
       ["close-print", "cancel-print"].forEach(function (id) {
         $(id).addEventListener("click", closePrint);
       });
@@ -2905,26 +4211,40 @@
         renderPrintSheet();
         window.print();
       });
+
+      $("open-settings").addEventListener("click", openSettings);
+      $("close-settings").addEventListener("click", closeSettings);
+      $("settings-modal").addEventListener("click", function (event) {
+        if (event.target === $("settings-modal")) { closeSettings(); }
+      });
+      $("save-settings").addEventListener("click", saveSettingsFromForm);
+      $("clear-settings").addEventListener("click", clearSettingsFromForm);
+      ["provider-official", "provider-relay"].forEach(function (id) {
+        $(id).addEventListener("change", updateProviderPanels);
+      });
       document.addEventListener("keydown", function (event) {
         if (event.key !== "Escape") { return; }
         if ($("upload-modal").classList.contains("open")) {
           closeUpload(true);
+        } else if ($("settings-modal").classList.contains("open")) {
+          closeSettings();
         } else if ($("print-modal").classList.contains("open")) {
           closePrint();
         }
       });
 
-      /* ===== 初始化：先渲染预置内容，再探测后端可用性。 ===== */
+      /* ===== 初始化：先渲染预置内容，再按运行模式检查 API 配置。 ===== */
       renderDate();
       renderHistory();
       updateFileSummary();
+      applyModeCopy();
       updateReviewBadge();
-      renderWordPills();
-      renderWord();
+      resetRounds();
+      renderRound();
       renderErrors();
       renderAssignments();
       syncTryBadge();
-      checkBackend();
+      refreshApiBadge();
     })();
   </script>
 </body>
